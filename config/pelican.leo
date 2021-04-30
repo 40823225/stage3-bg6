@@ -54,9 +54,9 @@
 </v>
 <v t="leo.20170710022054.1"><vh>可以另建節點存放 markdown 目錄下的 md 檔案</vh></v>
 <v t="leo.20170710022041.1"><vh>@path markdown</vh>
-<v t="leo.20180115115910.1"><vh>2020</vh>
-<v t="leo.20180423103639.1"><vh>2020 Fall CP 課程</vh>
-<v t="leo.20180423103656.1"><vh>@clean 20200813.md</vh></v>
+<v t="leo.20180115115910.1"><vh>stage3-bg6</vh>
+<v t="leo.20180423103639.1"><vh>第九週網誌</vh>
+<v t="leo.20180423103656.1"><vh>第九週網誌</vh></v>
 </v>
 </v>
 </v>
@@ -89,34 +89,22 @@ g.es("admin pelican Github 執行完畢")
 <t tx="leo.20180423103639.1"></t>
 <t tx="leo.20180423103656.1">@language md
 ---
-Title: 2020 Fall CP 課程
-Date: 2020-08-13 11:00
+Title: 第九週網誌
+Date: 2021-04-30 16:56
 Category: Misc
-Tags: 2020FallCP
-Slug: 2020-Fall-Intro-to-computer-programming-1
-Author: yen
+Tags: 第九週網誌
+Slug: 第九週網誌
+Author: 40823225 徐誠隆
 ---
 
-2020 Fall 計算機程式的教學主要介紹 Python 與 Flutter 在機械設計流程中的應用.
+講解八人分組第九週所做的事情
 
 &lt;!-- PELICAN_END_SUMMARY --&gt;
 
-Python
+第九週網誌
 ----
-Python 可以用來開發單機版的視窗程式套件 Pyslvs-UI
-
-Python 可以用來開發網際版的內容管理系統 CMSiMDE
-
-Python 可以用來控制 CoppeliaSim 與 Webots 虛擬環境中的機電系統
-
-Python 可以用於機器學習 Keras, Pytorch
-
-
-Flutter
-----
-
-Flutter 可以用來開發跨 Apple 與 Android 手機與平板上的 Apps
-
+我們這週找了八人分組的組員，及進行了第一次的討論，並決定了這次的小組主題「機械手臂」，還有進行了小組分工
+。
 </t>
 <t tx="yen.20170108171605.1"></t>
 <t tx="yen.20170108171605.2">QTreeWidget {
