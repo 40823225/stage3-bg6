@@ -54,13 +54,12 @@
 </v>
 <v t="leo.20170710022054.1"><vh>可以另建節點存放 markdown 目錄下的 md 檔案</vh></v>
 <v t="leo.20170710022041.1"><vh>@path markdown</vh>
-<v t="leo.20180115115910.1"><vh>2020</vh>
+<v t="leo.20180115115910.1"><vh>stage3-bg6</vh>
 <v t="leo.20180423103639.1"><vh>第九週網誌</vh>
-<v t="leo.20180423103656.1"><vh>@edit 20210430.md</vh></v>
+<v t="leo.20180423103656.1"><vh>第九週網誌</vh></v>
 </v>
 </v>
 </v>
-<v t="yen.20170108171733.83"><vh>產生 .key 與 .crt 指令</vh></v>
 </v>
 <v t="yen.20170108171930.1"><vh>@button https server</vh></v>
 <v t="yen.20170108171939.1"><vh>@button ipv6 https server</vh></v>
@@ -88,6 +87,25 @@ g.es("admin pelican Github 執行完畢")
 <t tx="leo.20180115093726.1"></t>
 <t tx="leo.20180115115910.1"></t>
 <t tx="leo.20180423103639.1"></t>
+<t tx="leo.20180423103656.1">@language md
+---
+Title: 第九週網誌
+Date: 2021-04-30 16:56
+Category: Misc
+Tags: 第九週網誌
+Slug: 第九週網誌
+Author: 40823225 徐誠隆
+---
+
+講解八人分組第九週所做的事情
+
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
+第九週網誌
+----
+我們這週找了八人分組的組員，及進行了第一次的討論，並決定了這次的小組主題「機械手臂」，還有進行了小組分工
+。
+</t>
 <t tx="yen.20170108171605.1"></t>
 <t tx="yen.20170108171605.2">QTreeWidget {
     /* These apply to the selected item, but not to editing items.*/
@@ -176,9 +194,6 @@ g.es("admin pelican 近端執行完畢")
 <t tx="yen.20170108171733.5"></t>
 <t tx="yen.20170108171733.71"></t>
 <t tx="yen.20170108171733.81"></t>
-<t tx="yen.20170108171733.83">sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout localhost.key -out localhost.crt
-
-</t>
 <t tx="yen.20170108171930.1">@language python
 import os
 import subprocess
