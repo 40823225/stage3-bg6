@@ -64,7 +64,8 @@
 <p>在coppeliaSim中叫出一個物件，然後對那個物件編寫程式如下</p>
 <p>開始模擬後按下鍵盤鍵即可在下方視窗顯示對應的按鍵</p>
 <p><img alt="" height="449" src="/images/findcode.jpg" width="800"/></p>
-<p></p><h2>控制解說</h2>
+<p></p>
+<h2>控制解說</h2>
 <p>方向鍵上,下，控制大臂的上下移動</p>
 <p>方向鍵左,右，控制底座的旋轉</p>
 <p>小鍵盤2,8 控制小臂上下移動</p>
@@ -72,7 +73,8 @@
 <p>小鍵盤1,3 控制手腕的轉動</p>
 <p>小鍵盤0 控制小臂是否與大臂連動</p>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/8Od8iPu0vRI" width="560"></iframe></p>
-<p></p><h2>Programming in Lua on multiple program</h2>
+<p></p>
+<h2>Programming in Lua on multiple program</h2>
 <p>圖檔下載</p>
 <p><a href="/downloads/機械手臂/programming in Lua in multiple program.ttt">programming in Lua in multiple program.ttt</a></p>
 <p>簡介:</p>
@@ -84,7 +86,8 @@
 <p><img alt="" height="495" src="/images/pro2.jpg" width="800"/></p>
 <p><img alt="" height="828" src="/images/pro3.jpg" width="800"/></p>
 <p><img alt="" height="587" src="/images/pro4.jpg" width="800"/></p>
-<p><img alt="" height="543" src="/images/pro5.jpg" width="800"/></p><h2>Programming in Lua in One program</h2>
+<p><img alt="" height="543" src="/images/pro5.jpg" width="800"/></p>
+<h2>Programming in Lua in One program</h2>
 <p>圖檔</p>
 <p><a href="/downloads/機械手臂/programming in Lua in One program.ttt">programming in Lua in One program.ttt</a></p>
 <p>簡介</p>
@@ -93,7 +96,8 @@
 <p>缺點: 程式較長，尋找特定函式較不易，變數較多程式控制還多，命名上須留意</p>
 <p><img alt="" height="1091" src="/images/proall_1.jpg" width="800"/></p>
 <p><img alt="" height="423" src="/images/proall_2.jpg" width="800"/></p>
-<p></p><h2>Programming in C++</h2>
+<p></p>
+<h2>Programming in C++</h2>
 <p>圖檔:</p>
 <p><a href="/downloads/機械手臂/programmingl in C++ Unclear.ttt">programmingl in C++ Unclear.ttt</a></p>
 <p>簡介:</p>
@@ -103,7 +107,8 @@
 <p><img alt="" height="636" src="/images/C_2.jpg" width="800"/></p>
 <p></p>
 <h2>教學影片</h2>
-<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/s8eRsonlKHo" width="560"></iframe></p><h1>remoteAPI</h1>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/s8eRsonlKHo" width="560"></iframe></p>
+<h1>remoteAPI</h1>
 <h2>remoteAPI in C++</h2>
 <h3>5月11</h3>
 <p>嘗試以C++最為remoteAPI控制的語言</p>
@@ -244,6 +249,91 @@ int main(){
 </pre>
 <p><br/><br/></p>
 <h2>remoteAPI in python</h2>
+<h3>0513</h3>
+<p>嘗試用remoteAPI鍵盤控制機械手臂，不過手臂上段模擬時出現甩動問題，因此只展示下半部分。</p>
+<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/bXgvrjMNPpQ" title="YouTube video player" width="560"></iframe></p>
+<p></p>
+<p>程式碼</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false"># File created by Thibaut Royer, Epitech school
+# thibaut1.royer@epitech.eu
+# It intends to be an example program for the "Two wheels, one arm" educative project.
+
+import sim as vrep
+import math
+import random
+import time
+import keyboard
+
+print ('Start')
+
+# Close eventual old connections
+vrep.simxFinish(-1)
+# Connect to V-REP remote server
+clientID = vrep.simxStart('192.168.0.4', 19997, True, True, 5000, 5)
+
+if clientID != -1:
+    print ('Connected to remote API server')
+    
+    res = vrep.simxAddStatusbarMessage(
+        clientID, "40823218",
+        vrep.simx_opmode_oneshot)
+    if res not in (vrep.simx_return_ok, vrep.simx_return_novalue_flag):
+        print("Could not add a message to the status bar.")
+
+    # Communication operating mode with the remote API : wait for its answer before continuing (blocking mode)
+    # http://www.coppeliarobotics.com/helpFiles/en/remoteApiConstants.htm
+    opmode = vrep.simx_opmode_oneshot_wait
+    STREAMING = vrep.simx_opmode_streaming
+
+    # Try to retrieve motors and robot handlers
+    # http://www.coppeliarobotics.com/helpFiles/en/remoteApiFunctionsPython.htm#simxGetObjectHandle
+    vrep.simxStartSimulation(clientID, opmode)
+    ret,base_handle=vrep.simxGetObjectHandle(clientID,"joint1_",opmode)
+    ret,bottom_handle=vrep.simxGetObjectHandle(clientID,"joint2_",opmode)
+    ret,top_handle=vrep.simxGetObjectHandle(clientID,"joint3_",opmode)
+    ret,rotate_handle=vrep.simxGetObjectHandle(clientID,"joint4_",opmode)
+    ret,wrist_handle=vrep.simxGetObjectHandle(clientID,"joint5_",opmode)
+    while True:
+        #Clockwise
+        if keyboard.is_pressed("a"):
+         vrep.simxSetJointTargetVelocity(clientID,base_handle,0.1,opmode)
+        #anti-Clockwise 
+        if keyboard.is_pressed("f"):
+         vrep.simxSetJointTargetVelocity(clientID,base_handle,-0.1,opmode)
+        #bottom_handle up
+        if keyboard.is_pressed ("w"):
+         vrep.simxSetJointTargetVelocity(clientID,bottom_handle,0.1,opmode)
+        #bottom_handle down
+        if keyboard.is_pressed ("s"):
+         vrep.simxSetJointTargetVelocity(clientID,bottom_handle,-0.1,opmode)
+         #top_handle up
+        if keyboard.is_pressed ("e"):
+         vrep.simxSetJointTargetVelocity(clientID,top_handle,0.1,opmode)
+         #top_handle down
+        if keyboard.is_pressed ("d"):
+         vrep.simxSetJointTargetVelocity(clientID,top_handle,-0.1,opmode)
+         #rotate
+        if keyboard.is_pressed ("r"):
+         vrep.simxSetJointTargetVelocity(clientID,rotate_handle,0.1,opmode)
+         #wrist_handle left
+        if keyboard.is_pressed ("j"):
+         vrep.simxSetJointTargetVelocity(clientID,wrist_handle,0.1,opmode)
+         #wrist_handle right
+        if keyboard.is_pressed ("k"):
+         vrep.simxSetJointTargetVelocity(clientID,wrist_handle,-0.1,opmode)
+         #stop
+        if keyboard.is_pressed ("space"):
+         vrep.simxSetJointTargetVelocity(clientID,base_handle,0,opmode)
+         vrep.simxSetJointTargetVelocity(clientID,bottom_handle,0,opmode)
+         vrep.simxSetJointTargetVelocity(clientID,top_handle,0,opmode)
+         vrep.simxSetJointTargetVelocity(clientID,rotate_handle,0,opmode)
+         vrep.simxSetJointTargetVelocity(clientID,wrist_handle,0,opmode)
+
+
+else:
+    print ('Failed connecting to remote API server')
+    print ('End')
+</pre>
 <h1>stage3</h1>
 <h2>每周進度影片</h2>
 <h3>第九周</h3>
