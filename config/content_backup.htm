@@ -114,19 +114,35 @@ end</pre>
 <p><img alt="" height="636" src="/images/C_2.jpg" width="800"/></p>
 <p></p>
 <h2>CoppeliaSim 教學</h2>
-<h3>內鍵CODE 指令</h3>
+<h3>軸的旋轉教學</h3>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/-8QNOsZnV1c" width="560"></iframe></p>
+<p>程式碼</p>
+<pre class="brush:lua;auto-links:false;toolbar:false" contenteditable="false">function sysCall_init()
+    -- do some initialization here
+    joint=sim.getObjectHandle('joint01')
+end
+
+function sysCall_actuation()
+    -- put your actuation code here
+    sim.setJointTargetPosition(joint,135*math.pi/180)
+end</pre>
+<h3>軸直線運動教學</h3>
+<p></p>
+<p></p><h3>內鍵CODE 指令</h3>
 <p>部分LUA指令講解</p>
 <p>1.sim.getObjectHandle</p>
 <p>使用範例如下</p>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">XXX=sim.getObjectHandle('joint')</pre>
 <p>講解 XXX為一個自行定義的名詞，此指令為定義XXX為一個連接軸，而('joint')為該軸在場景裡面的名稱</p>
-<p>2.sim.setJointTargetPosition</p>
+<p></p>
+<p><strong>2.sim.setJointTargetPosition</strong></p>
 <p><span>使用範例如下</span></p>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">sim.setJointTargetPosition(XXX,90)</pre>
 <p>講解 XXX移動至90這個位置，或旋轉至90rad，XXX請參見第一個指令講解,角度預設為RAD</p>
 <p>若要需求為旋轉至90deg，指令參考如下</p>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">sim.setJointTargetPosition(XXX,90*math.pi/180)</pre>
-<p>3.sim.getSimulatorMessage</p>
+<p></p>
+<p><strong>3.sim.getSimulatorMessage</strong></p>
 <p>使用範例如下</p>
 <pre class="brush:lua;auto-links:false;toolbar:false" contenteditable="false">message,auxiliaryData=sim.getSimulatorMessage()
 while message~=-1 do
@@ -148,7 +164,9 @@ end
 <p>當(while)"message的值不等於-1時</p>
 <p>若(if)<span>auxiliaryData讀取到的值為2009</span></p>
 <p><span>進行要做的事情，可以是上面第二項"sim.setJointTargetPosition"或其他指令</span></p>
-<p><span>4.simwat</span></p>
+<p><span>可參考<a href="https://40823225.github.io/stage3-bg6/content/%E5%B0%8B%E6%89%BE%E6%8E%A7%E5%88%B6%E4%BB%A3%E7%A2%BC.html">尋找控制代碼</a></span></p>
+<p><span></span></p>
+<p><strong>4.simwat</strong></p>
 <p><span>使用範例</span></p>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">sim.wait(0.01)</pre>
 <p>只能在線程控制中使用(Threaded chil script)</p>
