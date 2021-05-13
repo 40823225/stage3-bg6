@@ -40,6 +40,27 @@
 <p></p>
 <p>建立方塊並且對其進行XYZ軸控制</p>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/d_3A25jRKEs" width="560"></iframe></p>
+<h3>0513物件螺旋運動</h3>
+<p>使用<span>線程腳本使方塊進行螺旋運動</span></p>
+<p><span><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/4_rgcQVmUs0" width="560"></iframe></span></p>
+<p>code</p>
+<pre class="brush:lua;auto-links:false;toolbar:false" contenteditable="false">function sysCall_threadmain()
+    jointx=sim.getObjectHandle('01')
+    jointy=sim.getObjectHandle('02')
+    jointz=sim.getObjectHandle('03')
+    high=0
+    
+    for cycle=0,36000,1 do
+        sim.setJointTargetPosition(jointx,0.3*(math.sin(cycle*math.pi/180)))
+        sim.wait(0.01)
+        sim.setJointTargetPosition(jointy,0.3*(math.cos(cycle*math.pi/180)))
+        sim.wait(0.01)
+        high=high+0.001
+        sim.setJointTargetPosition(jointz,high)
+        sim.wait(0.01)
+        
+    end
+end</pre>
 <h3>0510架設機械手臂場景</h3>
 <p>將所有物件控制後直接進行模擬，檢測是否有異樣</p>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/rUZ-taH8l-4" width="560"></iframe></p>
@@ -92,9 +113,47 @@
 <p><img alt="" height="891" src="/images/C_1.jpg" width="800"/></p>
 <p><img alt="" height="636" src="/images/C_2.jpg" width="800"/></p>
 <p></p>
-<h2>CoppeliaSim 教學影片</h2>
-<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/s8eRsonlKHo" width="560"></iframe></p>
-<h2>舊資料</h2>
+<h2>CoppeliaSim 教學</h2>
+<h3>內鍵CODE 指令</h3>
+<p>部分LUA指令講解</p>
+<p>1.sim.getObjectHandle</p>
+<p>使用範例如下</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">XXX=sim.getObjectHandle('joint')</pre>
+<p>講解 XXX為一個自行定義的名詞，此指令為定義XXX為一個連接軸，而('joint')為該軸在場景裡面的名稱</p>
+<p>2.sim.setJointTargetPosition</p>
+<p><span>使用範例如下</span></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">sim.setJointTargetPosition(XXX,90)</pre>
+<p>講解 XXX移動至90這個位置，或旋轉至90rad，XXX請參見第一個指令講解,角度預設為RAD</p>
+<p>若要需求為旋轉至90deg，指令參考如下</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">sim.setJointTargetPosition(XXX,90*math.pi/180)</pre>
+<p>3.sim.getSimulatorMessage</p>
+<p>使用範例如下</p>
+<pre class="brush:lua;auto-links:false;toolbar:false" contenteditable="false">message,auxiliaryData=sim.getSimulatorMessage()
+while message~=-1 do
+        if (message==sim.message_keypress) then
+            if (auxiliaryData[1]==2009) then
+               指定要做的事情
+            end
+         end
+message,auxiliaryData=sim.getSimulatorMessage()
+end
+</pre>
+<p></p>
+<p>講解</p>
+<p>第一行</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">message,auxiliaryData=sim.getSimulatorMessage()</pre>
+<p>message代表跟鍵盤對接的狀態</p>
+<p>auxiliaryData代表讀取到鍵盤的值</p>
+<p>第二行的開始</p>
+<p>當(while)"message的值不等於-1時</p>
+<p>若(if)<span>auxiliaryData讀取到的值為2009</span></p>
+<p><span>進行要做的事情，可以是上面第二項"sim.setJointTargetPosition"或其他指令</span></p>
+<p><span>4.simwat</span></p>
+<p><span>使用範例</span></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">sim.wait(0.01)</pre>
+<p>只能在線程控制中使用(Threaded chil script)</p>
+<p>為暫停指令，括弧內單位為秒</p><h3>機械手臂設定範例</h3>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/s8eRsonlKHo" width="560"></iframe></p><h2>舊資料</h2>
 <h3>0511 Programming in Lua on multiple program</h3>
 <p>圖檔下載</p>
 <p><a href="/downloads/機械手臂/programming in Lua in multiple program.ttt">programming in Lua in multiple program.ttt</a></p>
@@ -349,7 +408,8 @@ else:
 <h3>第九周</h3>
 <p><iframe allowfullscreen="allowfullscreen" data-mce-fragment="1" height="314" src="//www.youtube.com/embed/dgA4QAF2RTI" width="560"></iframe></p>
 <h3>第十周</h3>
-<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/zyOrRSpavpE" width="560"></iframe></p><h2>task</h2>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/zyOrRSpavpE" width="560"></iframe></p>
+<h2>task</h2>
 <h3>task1</h3>
 <p>無</p>
 <h3>task2</h3>

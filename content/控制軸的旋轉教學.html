@@ -134,11 +134,19 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">discord << <a href='discord.html'>Previous</a> <a href='第二次討論.html'>Next</a> >> 第二次討論<br /><h1>第一次討論</h1>
-<p>4/27</p>
-<p><img alt="" height="624" src="./../images/第一次討論1.png" width="1000"/></p>
-<p><img alt="" height="662" src="./../images/第一次討論2.png" width="1000"/><img alt="" height="667" src="./../images/第一次討論3.png" width="1000"/><img alt="" height="664" src="./../images/第一次討論4.png" width="1000"/><img alt="" height="667" src="./../images/第一次討論5.png" width="1000"/><img alt="" height="653" src="./../images/第一次討論6.png" width="1000"/><img alt="" height="656" src="./../images/第一次討論7.png" width="1000"/><img alt="" height="670" src="./../images/第一次討論8.png" width="1000"/><img alt="" height="655" src="./../images/第一次討論9.png" width="1000"/><img alt="" height="657" src="./../images/第一次討論10.png" width="1000"/><img alt="" height="665" src="./../images/第一次討論11.png" width="1000"/><img alt="" height="668" src="./../images/第一次討論12.png" width="1000"/><img alt="" height="669" src="./../images/第一次討論13.png" width="1000"/></p>
-<br />discord << <a href='discord.html'>Previous</a> <a href='第二次討論.html'>Next</a> >> 第二次討論</div>
+    <div id="tipue_search_content">CoppeliaSim 教學 << <a href='CoppeliaSim 教學.html'>Previous</a> <a href='內鍵CODE 指令.html'>Next</a> >> 內鍵CODE 指令<br /><h1>控制軸的旋轉教學</h1>
+<p>程式碼</p>
+<pre class="brush:lua;auto-links:false;toolbar:false" contenteditable="false">function sysCall_init()
+    -- do some initialization here
+    joint=sim.getObjectHandle('joint01')
+end
+
+function sysCall_actuation()
+    -- put your actuation code here
+    sim.setJointTargetPosition(joint,135*math.pi/180)
+end</pre>
+<p></p>
+<p></p><br />CoppeliaSim 教學 << <a href='CoppeliaSim 教學.html'>Previous</a> <a href='內鍵CODE 指令.html'>Next</a> >> 內鍵CODE 指令</div>
         
     <!-- footer -->
       <div class="container">
