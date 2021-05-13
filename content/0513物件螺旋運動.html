@@ -2,7 +2,7 @@
         <head>
         <title>Stage3-bg6</title>
         <meta charset="utf-8">
-<meta property="head" content="H2">
+<meta property="head" content="H3">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700,900" rel="stylesheet">
         <link rel="stylesheet" href="./../cmsimde/static/chimper/fonts/icomoon/style.css">
@@ -134,16 +134,28 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">控制解說 << <a href='控制解說.html'>Previous</a> <a href='0511 Programming in C++.html'>Next</a> >> 0511 Programming in C++<br /><h1>0513 Lua 新增夾爪控制</h1>
-<p></p>
-<p>新增一夾爪與兩個攝影機</p>
-<p>夾爪可以夾取物品，攝影機可以方便對正要夾取的物品</p>
-<p>圖檔:</p>
-<p><a href="./../downloads/機械手臂/Camera contral.ttt">Camera contral.ttt</a></p>
-<p>參考影片</p>
-<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/E8EAB7ePr_Y" width="560"></iframe></p>
-<p></p>
-<br />控制解說 << <a href='控制解說.html'>Previous</a> <a href='0511 Programming in C++.html'>Next</a> >> 0511 Programming in C++</div>
+    <div id="tipue_search_content">0513對方快進行XYZ軸控制 << <a href='0513對方快進行XYZ軸控制.html'>Previous</a> <a href='0510架設機械手臂場景.html'>Next</a> >> 0510架設機械手臂場景<br /><h1>0513物件螺旋運動</h1>
+<p>使用<span>線程腳本使方塊進行螺旋運動</span></p>
+<p><span><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/4_rgcQVmUs0" width="560"></iframe></span></p>
+<p>code</p>
+<pre class="brush:lua;auto-links:false;toolbar:false" contenteditable="false">function sysCall_threadmain()
+    jointx=sim.getObjectHandle('01')
+    jointy=sim.getObjectHandle('02')
+    jointz=sim.getObjectHandle('03')
+    high=0
+    
+    for cycle=0,36000,1 do
+        sim.setJointTargetPosition(jointx,0.3*(math.sin(cycle*math.pi/180)))
+        sim.wait(0.01)
+        sim.setJointTargetPosition(jointy,0.3*(math.cos(cycle*math.pi/180)))
+        sim.wait(0.01)
+        high=high+0.001
+        sim.setJointTargetPosition(jointz,high)
+        sim.wait(0.01)
+        
+    end
+end</pre>
+<br />0513對方快進行XYZ軸控制 << <a href='0513對方快進行XYZ軸控制.html'>Previous</a> <a href='0510架設機械手臂場景.html'>Next</a> >> 0510架設機械手臂場景</div>
         
     <!-- footer -->
       <div class="container">

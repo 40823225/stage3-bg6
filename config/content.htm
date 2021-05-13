@@ -40,6 +40,27 @@
 <p></p>
 <p>建立方塊並且對其進行XYZ軸控制</p>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/d_3A25jRKEs" width="560"></iframe></p>
+<h3>0513物件螺旋運動</h3>
+<p>使用<span>線程腳本使方塊進行螺旋運動</span></p>
+<p><span><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/4_rgcQVmUs0" width="560"></iframe></span></p>
+<p>code</p>
+<pre class="brush:lua;auto-links:false;toolbar:false" contenteditable="false">function sysCall_threadmain()
+    jointx=sim.getObjectHandle('01')
+    jointy=sim.getObjectHandle('02')
+    jointz=sim.getObjectHandle('03')
+    high=0
+    
+    for cycle=0,36000,1 do
+        sim.setJointTargetPosition(jointx,0.3*(math.sin(cycle*math.pi/180)))
+        sim.wait(0.01)
+        sim.setJointTargetPosition(jointy,0.3*(math.cos(cycle*math.pi/180)))
+        sim.wait(0.01)
+        high=high+0.001
+        sim.setJointTargetPosition(jointz,high)
+        sim.wait(0.01)
+        
+    end
+end</pre>
 <h3>0510架設機械手臂場景</h3>
 <p>將所有物件控制後直接進行模擬，檢測是否有異樣</p>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/rUZ-taH8l-4" width="560"></iframe></p>
@@ -349,7 +370,8 @@ else:
 <h3>第九周</h3>
 <p><iframe allowfullscreen="allowfullscreen" data-mce-fragment="1" height="314" src="//www.youtube.com/embed/dgA4QAF2RTI" width="560"></iframe></p>
 <h3>第十周</h3>
-<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/zyOrRSpavpE" width="560"></iframe></p><h2>task</h2>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/zyOrRSpavpE" width="560"></iframe></p>
+<h2>task</h2>
 <h3>task1</h3>
 <p>無</p>
 <h3>task2</h3>
