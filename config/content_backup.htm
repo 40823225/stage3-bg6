@@ -359,7 +359,18 @@ int main(){
 <p>C4244為警示狀態外，其他錯誤經查詢發現似乎不能啟動"remotaApi.dll"的這個程式</p>
 <p></p>
 <p></p><h3>0512-2</h3>
-<p>.</p><h2>remoteAPI in python</h2>
+<p>後來經過修改與PATH路徑修正</p>
+<p>並且將remotaApi所需的標頭檔</p>
+<pre class="brush:cpp;auto-links:false;toolbar:false" contenteditable="false">#include &lt;exApi.h&gt;</pre>
+<p>將其修改程式變成</p>
+<pre class="brush:cpp;auto-links:false;toolbar:false" contenteditable="false">extern "C" {
+    #include "exApi.h" 
+}</pre>
+<p>但是似乎還是一樣</p>
+<p><img alt="" height="321" src="/images/VS2019.jpg" width="800"/></p>
+<p>目前正在尋找其他解法來修復</p>
+<p></p>
+<p></p><h2>remoteAPI in python</h2>
 <h3>0513</h3>
 <p>嘗試用remoteAPI鍵盤控制機械手臂，不過手臂上段模擬時出現甩動問題，因此只展示下半部分。</p>
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/bXgvrjMNPpQ" title="YouTube video player" width="560"></iframe></p>
