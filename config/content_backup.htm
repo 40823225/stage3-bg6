@@ -12,6 +12,7 @@
 <h1>機械手臂</h1>
 <p>原本我們的主題，是在我們原本在stage2-bg6所做的腳踏車衝擊測試機跟機械手臂在做選擇，但考慮到<span>腳踏車衝擊測試機的零件數過多及他所會遇到的力學相關的問題，所以我們最後討論出來的結果是，將主題訂為機械手臂。</span></p>
 <h2>繪圖成果</h2>
+<p>此為不含夾爪有六軸的機械手臂</p>
 <p><span><img alt="" height="708" src="/images/機械手臂成品.jpg" width="890"/></span></p>
 <h1>程式模擬</h1>
 <h2>W10</h2>
@@ -40,6 +41,51 @@
 <p></p>
 <p>建立方塊並且對其進行XYZ軸控制</p>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/d_3A25jRKEs" width="560"></iframe></p>
+<p></p>
+<p>程式碼如下</p>
+<pre class="brush:lua;auto-links:false;toolbar:false" contenteditable="false">function sysCall_init()
+    joint01=sim.getObjectHandle('joint01')
+    joint02=sim.getObjectHandle('joint02')
+    joint03=sim.getObjectHandle('joint03')
+    set=0
+    set1=0
+    set2=0
+end
+
+function sysCall_actuation()
+    -- put your actuation code here
+    message,auxiliaryData=sim.getSimulatorMessage()
+    while message~=-1 do
+        if (message==sim.message_keypress) then
+            if (auxiliaryData[1]==2009) then
+                set=set+0.01
+                sim.setJointTargetPosition(joint01,set)
+            end
+            if (auxiliaryData[1]==2010) then
+                set=set-0.01
+                sim.setJointTargetPosition(joint01,set)
+            end
+            if (auxiliaryData[1]==2007) then
+               set1=set1+0.01
+               sim.setJointTargetPosition(joint02,set1)
+            end
+           if (auxiliaryData[1]==2008) then
+              set1=set1-0.01
+              sim.setJointTargetPosition(joint02,set1)
+            end
+            if (auxiliaryData[1]==50) then
+               set2=set2+0.01
+               sim.setJointTargetPosition(joint03,set2)
+            end
+           if (auxiliaryData[1]==56) then
+              set2=set2-0.01
+              sim.setJointTargetPosition(joint03,set2)
+            end
+        end
+    message,auxiliaryData=sim.getSimulatorMessage()
+    end
+end</pre>
+<p></p>
 <h3>0513物件螺旋運動</h3>
 <p>使用<span>線程腳本使方塊進行螺旋運動</span></p>
 <p><span><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/4_rgcQVmUs0" width="560"></iframe></span></p>
@@ -64,16 +110,16 @@ end</pre>
 <h3>0510架設機械手臂場景</h3>
 <p>將所有物件控制後直接進行模擬，檢測是否有異樣</p>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/rUZ-taH8l-4" width="560"></iframe></p>
-<h3>0510場景微調</h3>
+<h3>機械手臂場景微調</h3>
 <p>嘗試使用程式控制</p>
 <p>但是還是會亂跑</p>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/wfNZQoLKPFc" width="560"></iframe></p>
 <p></p>
 <p></p>
-<h3>0510場景路徑控制</h3>
+<h3>機械手臂場景路徑控制</h3>
 <p>勉強可以控制路徑了(預先設定</p>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/TPKAXlE8dSc" width="560"></iframe></p>
-<h3>0510場景路徑控制</h3>
+<h3>機械手臂場景路徑控制</h3>
 <p>可以透過程式來進行路徑的預先規劃</p>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/ClpcrK5-4IQ" width="560"></iframe></p>
 <p></p>
@@ -109,7 +155,8 @@ end</pre>
 <p><a href="/downloads/機械手臂/programmingl in C++ Unclear.ttt">programmingl in C++ Unclear.ttt</a></p>
 <p>簡介:</p>
 <p>目前還尚未寫出(5/11)，在編譯上還有問題，問題跟"remoteAPI in C++"中的問題一樣</p>
-<p>並且尚未確定是否能直些在CoppliaSim中運行C++程式</p>
+<p>並且尚未能找到能改語言的方法</p>
+<p></p>
 <p><img alt="" height="891" src="/images/C_1.jpg" width="800"/></p>
 <p><img alt="" height="636" src="/images/C_2.jpg" width="800"/></p>
 <p></p>
@@ -138,9 +185,10 @@ function sysCall_actuation()
     -- put your actuation code here
     sim.setJointTargetPosition(joint,50)
 end</pre>
-<p></p><h3>內鍵CODE 指令</h3>
+<p></p>
+<h3>內鍵CODE 指令</h3>
 <p>部分LUA指令講解</p>
-<p>1.sim.getObjectHandle</p>
+<p><strong>1.sim.getObjectHandle</strong></p>
 <p>使用範例如下</p>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">XXX=sim.getObjectHandle('joint')</pre>
 <p>講解 XXX為一個自行定義的名詞，此指令為定義XXX為一個連接軸，而('joint')為該軸在場景裡面的名稱</p>
@@ -180,8 +228,10 @@ end
 <p><span>使用範例</span></p>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">sim.wait(0.01)</pre>
 <p>只能在線程控制中使用(Threaded chil script)</p>
-<p>為暫停指令，括弧內單位為秒</p><h3>機械手臂設定範例</h3>
-<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/s8eRsonlKHo" width="560"></iframe></p><h2>舊資料</h2>
+<p>為暫停指令，括弧內單位為秒</p>
+<h3>機械手臂設定範例</h3>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/s8eRsonlKHo" width="560"></iframe></p>
+<h2>舊資料</h2>
 <h3>0511 Programming in Lua on multiple program</h3>
 <p>圖檔下載</p>
 <p><a href="/downloads/機械手臂/programming in Lua in multiple program.ttt">programming in Lua in multiple program.ttt</a></p>
@@ -347,7 +397,8 @@ int main(){
     return clientID;
 }
 </pre>
-<p><br/><br/></p><h3>0512</h3>
+<p><br/><br/></p>
+<h3>0512</h3>
 <p>後來上網尋找解答發現疑似是complier的問題</p>
 <p>於是切換為VS2019進行編譯</p>
 <p>並且新增path及include至專案檔</p>
@@ -358,7 +409,8 @@ int main(){
 <p><img alt="" height="147" src="/images/1620920746110.jpg" width="450"/></p>
 <p>C4244為警示狀態外，其他錯誤經查詢發現似乎不能啟動"remotaApi.dll"的這個程式</p>
 <p></p>
-<p></p><h3>0512-2</h3>
+<p></p>
+<h3>0512-2</h3>
 <p>後來經過修改與PATH路徑修正</p>
 <p>並且將remotaApi所需的標頭檔</p>
 <pre class="brush:cpp;auto-links:false;toolbar:false" contenteditable="false">#include &lt;exApi.h&gt;</pre>
@@ -370,7 +422,8 @@ int main(){
 <p><img alt="" height="321" src="/images/VS2019.jpg" width="800"/></p>
 <p>目前正在尋找其他解法來修復</p>
 <p></p>
-<p></p><h2>remoteAPI in python</h2>
+<p></p>
+<h2>remoteAPI in python</h2>
 <h3>0513</h3>
 <p>嘗試用remoteAPI鍵盤控制機械手臂，不過手臂上段模擬時出現甩動問題，因此只展示下半部分。</p>
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/bXgvrjMNPpQ" title="YouTube video player" width="560"></iframe></p>
