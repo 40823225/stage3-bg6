@@ -8,7 +8,7 @@
 <p><a href="https://github.com/40823238/cd2021">40823238</a><a href="https://40823238.github.io/cd2021/content/index.html">/40823238</a> <span>吳容輝</span></p>
 <p><a href="https://github.com/40823247/cd2021">40823247</a><a href="https://40823247.github.io/cd2021/content/index.html">/40823247</a> <span>許力右</span></p>
 <p><a href="https://github.com/40823248/cd2021">40823248</a><a href="https://40823248.github.io/cd2021/content/index.html">/40823248</a> <span>劉彥廷</span></p>
-<p><span>test</span></p>
+<p></p>
 <h1>機械手臂</h1>
 <p>原本我們的主題，是在我們原本在stage2-bg6所做的腳踏車衝擊測試機跟機械手臂在做選擇，但考慮到<span>腳踏車衝擊測試機的零件數過多及他所會遇到的力學相關的問題，所以我們最後討論出來的結果是，將主題訂為機械手臂。</span></p>
 <h2>繪圖成果</h2>
@@ -144,7 +144,8 @@ end</pre>
 		message,auxiliaryData=simGetSimulatorMessage()
 	end
 end</pre>
-<p></p><h2>控制解說</h2>
+<p></p>
+<h2>控制解說</h2>
 <p>方向鍵上,下，控制大臂的上下移動</p>
 <p>方向鍵左,右，控制底座的旋轉</p>
 <p>小鍵盤2,8 控制小臂上下移動</p>
@@ -198,7 +199,7 @@ function sysCall_actuation()
     sim.setJointTargetPosition(joint,50)
 end</pre>
 <p></p>
-<h3>內鍵CODE 指令</h3>
+<h3>CODE 指令解說</h3>
 <p>部分LUA指令講解</p>
 <p><strong>1.sim.getObjectHandle</strong></p>
 <p>使用範例如下</p>
@@ -240,8 +241,7 @@ end
 <p><span>使用範例</span></p>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">sim.wait(0.01)</pre>
 <p>只能在線程控制中使用(Threaded chil script)</p>
-<p>為暫停指令，括弧內單位為秒</p>
-<h3>機械手臂設定範例</h3>
+<p>為暫停指令，括弧內單位為秒</p><h3>機械手臂設定範例</h3>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/s8eRsonlKHo" width="560"></iframe></p>
 <h2>舊資料</h2>
 <h3>0511 Programming in Lua on multiple program</h3>
