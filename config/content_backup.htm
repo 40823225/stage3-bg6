@@ -126,8 +126,18 @@ function sysCall_actuation()
     -- put your actuation code here
     sim.setJointTargetPosition(joint,135*math.pi/180)
 end</pre>
-<h3>軸直線運動教學</h3>
-<p></p>
+<h3>直線運動教學</h3>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/KHClnqMEHfU" width="560"></iframe></p>
+<p>程式指令</p>
+<pre class="brush:lua;auto-links:false;toolbar:false" contenteditable="false">function sysCall_init()
+    -- do some initialization here
+    joint=sim.getObjectHandle('joint')
+end
+
+function sysCall_actuation()
+    -- put your actuation code here
+    sim.setJointTargetPosition(joint,50)
+end</pre>
 <p></p><h3>內鍵CODE 指令</h3>
 <p>部分LUA指令講解</p>
 <p>1.sim.getObjectHandle</p>
@@ -199,7 +209,9 @@ end
 <h2>remoteAPI in C++</h2>
 <h3>0511</h3>
 <p>嘗試以C++最為remoteAPI控制的語言</p>
-<p>進行修改後還是出現問題</p>
+<p>compiler為code block in Win10</p>
+<p>不論怎麼修改在</p>
+<p>後還是出現問題</p>
 <pre class="brush:cpp;auto-links:false;toolbar:false" contenteditable="false">simxGetObjectHandle(clientID, "joint1", &amp;joint01, simx_opmode_oneshot_wait);</pre>
 <p>上程式片段中</p>
 <pre class="brush:cpp;auto-links:false;toolbar:false" contenteditable="false">simx_opmode_oneshot_wait</pre>
@@ -207,6 +219,7 @@ end
 <p>error: 'simx_opmode_oneshot_wait' was not declared in this scope</p>
 <p>中譯: <span>simx_opmode_oneshot_wait 定義不明</span></p>
 <p><span>但是在尋找網路上的範例，寫法也都是如我程式中一樣，目前還在尋找解決方法</span></p>
+<p><span><img alt="" height="160" src="/images/codeblock.jpg" width="800"/></span></p>
 <p><span></span></p>
 <p><span>附上程式</span></p>
 <pre class="brush:cpp;auto-links:false;toolbar:false" contenteditable="false">#include &lt;Windows.h&gt;
@@ -334,8 +347,19 @@ int main(){
     return clientID;
 }
 </pre>
-<p><br/><br/></p>
-<h2>remoteAPI in python</h2>
+<p><br/><br/></p><h3>0512</h3>
+<p>後來上網尋找解答發現疑似是complier的問題</p>
+<p>於是切換為VS2019進行編譯</p>
+<p>並且新增path及include至專案檔</p>
+<p>在X64的環境下進行DeBug後</p>
+<p>第一個錯誤是這個</p>
+<p><img caption="false" height="164" src="/images/error01.jpg" width="450"/></p>
+<p>並且出現以下錯誤</p>
+<p><img alt="" height="147" src="/images/1620920746110.jpg" width="450"/></p>
+<p>C4244為警示狀態外，其他錯誤經查詢發現似乎不能啟動"remotaApi.dll"的這個程式</p>
+<p></p>
+<p></p><h3>0512-2</h3>
+<p>.</p><h2>remoteAPI in python</h2>
 <h3>0513</h3>
 <p>嘗試用remoteAPI鍵盤控制機械手臂，不過手臂上段模擬時出現甩動問題，因此只展示下半部分。</p>
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/bXgvrjMNPpQ" title="YouTube video player" width="560"></iframe></p>
