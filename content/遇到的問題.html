@@ -2,7 +2,7 @@
         <head>
         <title>Stage3-bg6</title>
         <meta charset="utf-8">
-<meta property="head" content="H3">
+<meta property="head" content="H2">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700,900" rel="stylesheet">
         <link rel="stylesheet" href="./../cmsimde/static/chimper/fonts/icomoon/style.css">
@@ -134,148 +134,8 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">remoteAPI in C++ << <a href='remoteAPI in C++.html'>Previous</a> <a href='0512.html'>Next</a> >> 0512<br /><h1>0511</h1>
-<p>嘗試以C++最為remoteAPI控制的語言</p>
-<p>compiler為code block in Win10</p>
-<p>不論怎麼修改在</p>
-<p>後還是出現問題</p>
-<pre class="brush:cpp;auto-links:false;toolbar:false" contenteditable="false">simxGetObjectHandle(clientID, "joint1", &amp;joint01, simx_opmode_oneshot_wait);</pre>
-<p>上程式片段中</p>
-<pre class="brush:cpp;auto-links:false;toolbar:false" contenteditable="false">simx_opmode_oneshot_wait</pre>
-<p>此定義一直出現error，內容如下</p>
-<p>error: 'simx_opmode_oneshot_wait' was not declared in this scope</p>
-<p>中譯: <span>simx_opmode_oneshot_wait 定義不明</span></p>
-<p><span>但是在尋找網路上的範例，寫法也都是如我程式中一樣，目前還在尋找解決方法</span></p>
-<p><span><img alt="" height="160" src="./../images/codeblock.jpg" width="800"/></span></p>
-<p><span></span></p>
-<p><span>附上程式</span></p>
-<pre class="brush:cpp;auto-links:false;toolbar:false" contenteditable="false">#include &lt;Windows.h&gt;
-#include &lt;iostream&gt;
-#include &lt;stdio.h&gt;
-#include &lt;stdlib.h&gt;
-#include &lt;math.h&gt;
-
-
-extern "C" {
-    #include "remoteAPI/extApi.h"
-}
-
-
-
-using namespace std;
-
-int main(){
-    int clientID = 0;
-    simxFinish(-1);
-    clientID = simxStart((simxChar*)"127.0.0.1", 19997, true, true, 5000, 5);
-    Sleep(1);
-    if (clientID != -1)
-    {
-        int joint01;
-        int joint02;
-        int joint03;
-        int joint04;
-        int joint05;
-        simxGetObjectHandle(clientID, "joint1", &amp;joint01, simx_opmode_oneshot_wait);//setting
-        simxGetObjectHandle(clientID, "joint2", &amp;joint02, simx_opmode_oneshot_wait);
-        simxGetObjectHandle(clientID, "joint3", &amp;joint03, simx_opmode_oneshot_wait);
-        simxGetObjectHandle(clientID, "joint4", &amp;joint04, simx_opmode_oneshot_wait);
-        simxGetObjectHandle(clientID, "joint5", &amp;joint05, simx_opmode_oneshot_wait);
-
-
-        float degset01=-11.9;
-        float degset02=34.69;
-        float degset03=-20.2;
-        float degset04=-11.9;
-        float degset05=-11.9;
-        float dif=1;
-
-        //angle set0
-        simxSetJointTargetPosition(clientID,joint01,degset01,simx_opmode_oneshot);
-        simxSetJointTargetPosition(clientID,joint02,degset02,simx_opmode_oneshot);
-        simxSetJointTargetPosition(clientID,joint03,degset03,simx_opmode_oneshot);
-        simxSetJointTargetPosition(clientID,joint04,degset04,simx_opmode_oneshot);
-        simxSetJointTargetPosition(clientID,joint05,degset05,simx_opmode_oneshot);
-        bool balance_contral=true;
-
-
-        clientID,auxiliaryData=simGetSimulatorMessage();
-
-
-        while (clientID!=-1) {
-            if (clientID==simxmessage_keypress) {
-                if (auxiliaryData[1]==2009) { //up Key
-                    degset01=degset01+dif;
-                    simxSetJointTargetPosition(clientID,joint01,degset01,simx_opmode_oneshot);
-                }
-                if (auxiliaryData[1]==2010) { //down key
-                    degset01=degset01-dif;
-                    simxSetJointTargetPosition(clientID,joint01,degset01,simx_opmode_oneshot);
-                }
-                if (auxiliaryData[1]==2007) { //left key
-                    degset02=degset02+dif;
-                    simxSetJointTargetPosition(clientID,joint02,degset02,simx_opmode_oneshot);
-                }
-                if (auxiliaryData[1]==2008) {  //right key
-                    degset02=degset02-dif;
-                    simxSetJointTargetPosition(clientID,joint02,degset02,simx_opmode_oneshot);
-                }
-                if (auxiliaryData[1]==56) { //num8 key
-                    degset03=degset03+dif;
-                    simxSetJointTargetPosition(clientID,joint03,degset03,simx_opmode_oneshot);
-                }
-                if (auxiliaryData[1]==50) { //num2 key
-                    degset03=degset03-dif;
-                    simxSetJointTargetPosition(clientID,joint03,degset03,simx_opmode_oneshot);
-
-                }
-                if (auxiliaryData[1]==54) { //num6 key
-                    degset04=degset04+dif;
-                    simxSetJointTargetPosition(clientID,joint04,degset04,simx_opmode_oneshot);
-                }
-                if (auxiliaryData[1]==52) { //num4 key
-                    degset04=degset04-dif;
-                    simxSetJointTargetPosition(clientID,joint04,degset04,simx_opmode_oneshot);
-                }
-                if (auxiliaryData[1]==49) { //mun1 key
-                    degset05=degset05+dif;
-                    simxSetJointTargetPosition(clientID,joint05,degset05,simx_opmode_oneshot);
-                }
-                if (auxiliaryData[1]==51) { //num3 key
-                    degset05=degset05-dif;
-                    simxSetJointTargetPosition(clientID,joint05,degset05,simx_opmode_oneshot);
-                }
-
-
-
-
-                if  (auxiliaryData[1]==48){ //setting auto Balance at num0 key
-                    if (balance_contral==true){
-                        balance_contral=false;
-                    }else{
-                        balance_contral=true;
-                    }
-                }
-                if (balance_contral==true) {
-                    if (auxiliaryData[1]==2007) {
-                        degset03=degset03+dif ;
-                        simxSetJointTargetPosition(clientID,joint03,degset03,simx_opmode_oneshot);
-                    }
-                    if (auxiliaryData[1]==2008) {
-                        degset03=degset03-dif;
-                        simxSetJointTargetPosition(clientID,joint03,degset03,simx_opmode_oneshot);
-                        }
-                    }
-                }
-        clientID,auxiliaryData=simGetSimulatorMessage();
-        }
-    }
-    simxFinish(clientID);
-    return clientID;
-}
-</pre>
-<p><br/><br/></p>
-<br />remoteAPI in C++ << <a href='remoteAPI in C++.html'>Previous</a> <a href='0512.html'>Next</a> >> 0512</div>
+    <div id="tipue_search_content">第三次討論 << <a href='第三次討論.html'>Previous</a> <a href='更新出錯.html'>Next</a> >> 更新出錯<br /><h1>遇到的問題</h1>
+<br />第三次討論 << <a href='第三次討論.html'>Previous</a> <a href='更新出錯.html'>Next</a> >> 更新出錯</div>
         
     <!-- footer -->
       <div class="container">
