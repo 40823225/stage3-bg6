@@ -2,7 +2,7 @@
         <head>
         <title>Stage3-bg6</title>
         <meta charset="utf-8">
-<meta property="head" content="H2">
+<meta property="head" content="H3">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700,900" rel="stylesheet">
         <link rel="stylesheet" href="./../cmsimde/static/chimper/fonts/icomoon/style.css">
@@ -134,10 +134,93 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">機械手臂 << <a href='機械手臂.html'>Previous</a> <a href='程式模擬.html'>Next</a> >> 程式模擬<br /><h1>繪圖成果</h1>
-<p>此為不含夾爪有六軸的機械手臂</p>
-<p><span><img alt="" height="708" src="./../images/機械手臂成品.jpg" width="890"/></span></p>
-<br />機械手臂 << <a href='機械手臂.html'>Previous</a> <a href='程式模擬.html'>Next</a> >> 程式模擬</div>
+    <div id="tipue_search_content">remoteAPI in python << <a href='remoteAPI in python.html'>Previous</a> <a href='remoteApi in Lua.html'>Next</a> >> remoteApi in Lua<br /><h1>0513-1</h1>
+<p>嘗試用remoteAPI鍵盤控制機械手臂，不過手臂上段模擬時出現甩動問題，因此只展示下半部分。</p>
+<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/bXgvrjMNPpQ" title="YouTube video player" width="560"></iframe></p>
+<p></p>
+<p>程式碼</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false"># File created by Thibaut Royer, Epitech school
+# thibaut1.royer@epitech.eu
+# It intends to be an example program for the "Two wheels, one arm" educative project.
+
+import sim as vrep
+import math
+import random
+import time
+import keyboard
+
+print ('Start')
+
+# Close eventual old connections
+vrep.simxFinish(-1)
+# Connect to V-REP remote server
+clientID = vrep.simxStart('192.168.0.4', 19997, True, True, 5000, 5)
+
+if clientID != -1:
+    print ('Connected to remote API server')
+    
+    res = vrep.simxAddStatusbarMessage(
+        clientID, "40823218",
+        vrep.simx_opmode_oneshot)
+    if res not in (vrep.simx_return_ok, vrep.simx_return_novalue_flag):
+        print("Could not add a message to the status bar.")
+
+    # Communication operating mode with the remote API : wait for its answer before continuing (blocking mode)
+    # http://www.coppeliarobotics.com/helpFiles/en/remoteApiConstants.htm
+    opmode = vrep.simx_opmode_oneshot_wait
+    STREAMING = vrep.simx_opmode_streaming
+
+    # Try to retrieve motors and robot handlers
+    # http://www.coppeliarobotics.com/helpFiles/en/remoteApiFunctionsPython.htm#simxGetObjectHandle
+    vrep.simxStartSimulation(clientID, opmode)
+    ret,base_handle=vrep.simxGetObjectHandle(clientID,"joint1_",opmode)
+    ret,bottom_handle=vrep.simxGetObjectHandle(clientID,"joint2_",opmode)
+    ret,top_handle=vrep.simxGetObjectHandle(clientID,"joint3_",opmode)
+    ret,rotate_handle=vrep.simxGetObjectHandle(clientID,"joint4_",opmode)
+    ret,wrist_handle=vrep.simxGetObjectHandle(clientID,"joint5_",opmode)
+    while True:
+        #Clockwise
+        if keyboard.is_pressed("a"):
+         vrep.simxSetJointTargetVelocity(clientID,base_handle,0.1,opmode)
+        #anti-Clockwise 
+        if keyboard.is_pressed("f"):
+         vrep.simxSetJointTargetVelocity(clientID,base_handle,-0.1,opmode)
+        #bottom_handle up
+        if keyboard.is_pressed ("w"):
+         vrep.simxSetJointTargetVelocity(clientID,bottom_handle,0.1,opmode)
+        #bottom_handle down
+        if keyboard.is_pressed ("s"):
+         vrep.simxSetJointTargetVelocity(clientID,bottom_handle,-0.1,opmode)
+         #top_handle up
+        if keyboard.is_pressed ("e"):
+         vrep.simxSetJointTargetVelocity(clientID,top_handle,0.1,opmode)
+         #top_handle down
+        if keyboard.is_pressed ("d"):
+         vrep.simxSetJointTargetVelocity(clientID,top_handle,-0.1,opmode)
+         #rotate
+        if keyboard.is_pressed ("r"):
+         vrep.simxSetJointTargetVelocity(clientID,rotate_handle,0.1,opmode)
+         #wrist_handle left
+        if keyboard.is_pressed ("j"):
+         vrep.simxSetJointTargetVelocity(clientID,wrist_handle,0.1,opmode)
+         #wrist_handle right
+        if keyboard.is_pressed ("k"):
+         vrep.simxSetJointTargetVelocity(clientID,wrist_handle,-0.1,opmode)
+         #stop
+        if keyboard.is_pressed ("space"):
+         vrep.simxSetJointTargetVelocity(clientID,base_handle,0,opmode)
+         vrep.simxSetJointTargetVelocity(clientID,bottom_handle,0,opmode)
+         vrep.simxSetJointTargetVelocity(clientID,top_handle,0,opmode)
+         vrep.simxSetJointTargetVelocity(clientID,rotate_handle,0,opmode)
+         vrep.simxSetJointTargetVelocity(clientID,wrist_handle,0,opmode)
+
+
+else:
+    print ('Failed connecting to remote API server')
+    print ('End')
+</pre>
+<p></p>
+<br />remoteAPI in python << <a href='remoteAPI in python.html'>Previous</a> <a href='remoteApi in Lua.html'>Next</a> >> remoteApi in Lua</div>
         
     <!-- footer -->
       <div class="container">
