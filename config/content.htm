@@ -199,8 +199,68 @@ function sysCall_actuation()
     -- put your actuation code here
     sim.setJointTargetPosition(joint,50)
 end</pre>
-<p></p>
-<h3>CODE 指令解說</h3>
+<h3>可控制運動-1</h3>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/ZbITEg3IuAc" width="560"></iframe></p>
+<p>程式碼</p>
+<pre class="brush:lua;auto-links:false;toolbar:false" contenteditable="false">function sysCall_init()
+    -- do some initialization here
+    joint=sim.getObjectHandle('joint')
+    set=0
+end
+ 
+function sysCall_actuation()
+    -- put your actuation code here
+    message,auiliaryData=sim.getSimulatorMessage()
+    while message~=-1 do
+        if(message==sim.message_keypress)then
+            if(auiliaryData[1]==2009)then
+                set=set+0.01
+                sim.setJointTargetPosition(joint,set)
+            end
+        end
+    message,auiliaryData=sim.getSimulatorMessage()
+    end
+end</pre>
+<p></p><h3>可控制運動-2</h3>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/7ui7HK5A3l4" width="560"></iframe></p>
+<p>程式碼  (注:下方程式碼有修改 degset(每次旋轉的角度)不會小於1</p>
+<pre class="brush:lua;auto-links:false;toolbar:false" contenteditable="false">function sysCall_init()
+    -- do some initialization here
+    joint=sim.getObjectHandle('joint')
+    set=0
+    degset=1
+end
+ 
+function sysCall_actuation()
+    -- put your actuation code here
+    message,auxiliaryData=sim.getSimulatorMessage()
+    while message~=-1 do
+        if (message==sim.message_keypress) then
+            if (auxiliaryData[1]==2009) then
+            set=set+degset
+            sim.setJointTargetPosition(joint,set*math.pi/180)
+            end
+            if (auxiliaryData[1]==2010) then
+            set=set-degset
+            sim.setJointTargetPosition(joint,set*math.pi/180)
+            end
+            if (auxiliaryData[1]==2007) then
+                degset=degset+5
+                print(degset)
+            end
+            if (auxiliaryData[1]==2008) then
+                degset=degset-5
+                if(degset&lt;1) then
+                    degset=1
+                end
+                print(degset)
+            end
+        end
+    message,auxiliaryData=sim.getSimulatorMessage()
+    end
+end
+    </pre>
+<p></p><h3>CODE 指令解說</h3>
 <p>部分LUA指令講解</p>
 <p><strong>1.sim.getObjectHandle</strong></p>
 <p>使用範例如下</p>
