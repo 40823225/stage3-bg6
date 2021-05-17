@@ -2,7 +2,7 @@
         <head>
         <title>Stage3-bg6</title>
         <meta charset="utf-8">
-<meta property="head" content="H2">
+<meta property="head" content="H3">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700,900" rel="stylesheet">
         <link rel="stylesheet" href="./../cmsimde/static/chimper/fonts/icomoon/style.css">
@@ -134,13 +134,54 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">W10 << <a href='W10.html'>Previous</a> <a href='CoppliaSim模擬圖檔.html'>Next</a> >> CoppliaSim模擬圖檔<br /><h1>W11</h1>
-<p><span>根據上網找的資料，發現COPPELIASIM的程式編譯語言為LUA，但仍可透過改變設定，來使用其他語言編譯。</span></p>
-<p><span><img alt="" height="305" src="./../images/chrome_ksKg2rL82f.png" width="500"/></span></p>
-<p><span>以下為參考資料:</span></p>
-<p><a href="https://blog.csdn.net/qq_29696095/article/details/104406971">https://blog.csdn.net/qq_29696095/article/details/104406971</a><br/><a href="https://blog.csdn.net/qq_29696095/article/details/104474081">https://blog.csdn.net/qq_29696095/article/details/104474081</a><br/><a href="https://www.coppeliarobotics.com/helpFiles/en/inverseKinematicsTutorial.htm">https://www.coppeliarobotics.com/helpFiles/en/inverseKinematicsTutorial.htm</a></p>
-<p><a href="http://mde.tw/cd2021/downloads/V-REP%20Lecture.pdf">http://mde.tw/cd2021/downloads/V-REP%20Lecture.pdf</a><br/><a href="http://hades.mech.northwestern.edu/index.php/CoppeliaSim_Introduction">http://hades.mech.northwestern.edu/index.php/CoppeliaSim_Introduction</a><br/><a href="https://www.coppeliarobotics.com/helpFiles/index.html">https://www.coppeliarobotics.com/helpFiles/index.html</a><br/><a href="http://mde.tw/cd2021/content/V-rep.html">http://mde.tw/cd2021/content/V-rep.html</a></p>
-<br />W10 << <a href='W10.html'>Previous</a> <a href='CoppliaSim模擬圖檔.html'>Next</a> >> CoppliaSim模擬圖檔</div>
+    <div id="tipue_search_content">2-可變速之旋轉運動 << <a href='2-可變速之旋轉運動.html'>Previous</a> <a href='CODE 指令解說.html'>Next</a> >> CODE 指令解說<br /><h1>3-遙控攝影小汽車</h1>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/nNmpBqzVHT0" width="560"></iframe></p>
+<p>範例程式碼</p>
+<pre class="brush:lua;auto-links:false;toolbar:false" contenteditable="false">function sysCall_init()
+    -- do some initialization here
+    f=sim.getObjectHandle('F')
+    r=sim.getObjectHandle('R')
+    speedf=10
+    speedr=10
+    Cam1=sim.getObjectHandle('Camera')
+    CamView1=sim.floatingViewAdd(0.2,0.8,0.5,0.5,0)
+    sim.adjustView(CamView1,Cam1,64)
+end
+
+function sysCall_cleanup() 
+    sim.floatingViewRemove(CamView1)
+end 
+ 
+function sysCall_actuation()
+    -- put your actuation code here
+    message,auxiliaryData=sim.getSimulatorMessage()
+    while message~=-1 do
+        if (message==sim.message_keypress) then
+            if (auxiliaryData[1]==2007) then
+                speedf=speedf-30
+                speedr=speedr-30
+                sim.setJointTargetPosition(f,speedf*math.pi/180)
+                sim.setJointTargetPosition(r,speedr*math.pi/180)
+            end
+            if (auxiliaryData[1]==2008) then
+                speedf=speedf+30
+                speedr=speedr+30
+                sim.setJointTargetPosition(f,speedf*math.pi/180)
+                sim.setJointTargetPosition(r,speedr*math.pi/180)
+            end
+            if (auxiliaryData[1]==2009) then
+                speedr=speedr-30
+                sim.setJointTargetPosition(r,speedr*math.pi/180)
+            end
+            if (auxiliaryData[1]==2010) then
+                speedf=speedf-30
+                sim.setJointTargetPosition(f,speedf*math.pi/180)
+            end
+        end
+    message,auxiliaryData=sim.getSimulatorMessage()
+    end
+end</pre>
+<p></p><br />2-可變速之旋轉運動 << <a href='2-可變速之旋轉運動.html'>Previous</a> <a href='CODE 指令解說.html'>Next</a> >> CODE 指令解說</div>
         
     <!-- footer -->
       <div class="container">
