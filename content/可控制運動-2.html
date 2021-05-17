@@ -2,7 +2,7 @@
         <head>
         <title>Stage3-bg6</title>
         <meta charset="utf-8">
-<meta property="head" content="H2">
+<meta property="head" content="H3">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700,900" rel="stylesheet">
         <link rel="stylesheet" href="./../cmsimde/static/chimper/fonts/icomoon/style.css">
@@ -134,9 +134,47 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">task3 << <a href='task3.html'>Previous</a> <a href='discord.html'>Next</a> >> discord<br /><h1>討論</h1>
-<p>本小組的討論時間在組員的協調下，最終定為每個禮拜一的晚上11.。</p>
-<br />task3 << <a href='task3.html'>Previous</a> <a href='discord.html'>Next</a> >> discord</div>
+    <div id="tipue_search_content">可控制運動-1 << <a href='可控制運動-1.html'>Previous</a> <a href='CODE 指令解說.html'>Next</a> >> CODE 指令解說<br /><h1>可控制運動-2</h1>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/7ui7HK5A3l4" width="560"></iframe></p>
+<p>程式碼  (注:下方程式碼有修改 degset(每次旋轉的角度)不會小於1</p>
+<pre class="brush:lua;auto-links:false;toolbar:false" contenteditable="false">function sysCall_init()
+    -- do some initialization here
+    joint=sim.getObjectHandle('joint')
+    set=0
+    degset=1
+end
+ 
+function sysCall_actuation()
+    -- put your actuation code here
+    message,auxiliaryData=sim.getSimulatorMessage()
+    while message~=-1 do
+        if (message==sim.message_keypress) then
+            if (auxiliaryData[1]==2009) then
+            set=set+degset
+            sim.setJointTargetPosition(joint,set*math.pi/180)
+            end
+            if (auxiliaryData[1]==2010) then
+            set=set-degset
+            sim.setJointTargetPosition(joint,set*math.pi/180)
+            end
+            if (auxiliaryData[1]==2007) then
+                degset=degset+5
+                print(degset)
+            end
+            if (auxiliaryData[1]==2008) then
+                degset=degset-5
+                if(degset&lt;1) then
+                    degset=1
+                end
+                print(degset)
+            end
+        end
+    message,auxiliaryData=sim.getSimulatorMessage()
+    end
+end
+    </pre>
+<p></p>
+<br />可控制運動-1 << <a href='可控制運動-1.html'>Previous</a> <a href='CODE 指令解說.html'>Next</a> >> CODE 指令解說</div>
         
     <!-- footer -->
       <div class="container">

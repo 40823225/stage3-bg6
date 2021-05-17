@@ -4,12 +4,12 @@
 <p><a href="https://github.com/40823214/cd2021">40823214</a>/<a href="https://40823214.github.io/cd2021/content/index.html">40823214</a> <span>林厚宇</span></p>
 <p><a href="https://github.com/40823216/cd2021">40823216</a><a href="https://40823216.github.io/cd2021/content/index.html">/40823216</a> <span>陳弘勛</span></p>
 <p><a href="https://github.com/40823218/cd2021">40823218</a><a href="https://40823218.github.io/cd2021/content/index.html">/40823218</a> <span>陳致文</span></p>
-<p><a href="https://github.com/40823225/cd2021">40823225</a><a href="https://40823225.github.io/cd2021/content/index.html">/40823225</a> <span>徐誠隆</span></p>
+<p><a href="https://github.com/40823225/cd2021">40823225</a><a href="https://40823225.github.io/cd2021/content/index.html">/40823225</a> <span>徐誠隆 </span></p>
 <p><a href="https://github.com/40823238/cd2021">40823238</a><a href="https://40823238.github.io/cd2021/content/index.html">/40823238</a> <span>吳容輝</span></p>
-<p><a href="https://github.com/40823247/cd2021">40823247</a><a href="https://40823247.github.io/cd2021/content/index.html">/40823247</a> <span>許力右</span></p>
+<p><a href="https://github.com/40823247/cd2021">40823247</a><a href="https://40823247.github.io/cd2021/content/index.html">/40823247</a> <span>許力右test</span></p>
 <p><a href="https://github.com/40823248/cd2021">40823248</a><a href="https://40823248.github.io/cd2021/content/index.html">/40823248</a> <span>劉彥廷</span></p>
-<p></p>
-<h1>機械手臂</h1>
+<p><span>sshtest</span></p>
+<p>-2</p><h1>機械手臂</h1>
 <p>原本我們的主題，是在我們原本在stage2-bg6所做的腳踏車衝擊測試機跟機械手臂在做選擇，但考慮到<span>腳踏車衝擊測試機的零件數過多及他所會遇到的力學相關的問題，所以我們最後討論出來的結果是，將主題訂為機械手臂。</span></p>
 <h2>繪圖成果</h2>
 <p>此為不含夾爪有六軸的機械手臂</p>
@@ -154,7 +154,8 @@ end</pre>
 <p>小鍵盤1,3 控制手腕的轉動</p>
 <p>小鍵盤0 控制小臂是否與大臂連動</p>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/8Od8iPu0vRI" width="560"></iframe></p>
-<p></p><h2>0513 Lua 新增夾爪控制</h2>
+<p></p>
+<h2>0513 Lua 新增夾爪控制</h2>
 <p></p>
 <p>新增一夾爪與兩個攝影機</p>
 <p>夾爪可以夾取物品，攝影機可以方便對正要夾取的物品</p>
@@ -198,8 +199,68 @@ function sysCall_actuation()
     -- put your actuation code here
     sim.setJointTargetPosition(joint,50)
 end</pre>
-<p></p>
-<h3>CODE 指令解說</h3>
+<h3>可控制運動-1</h3>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/ZbITEg3IuAc" width="560"></iframe></p>
+<p>程式碼</p>
+<pre class="brush:lua;auto-links:false;toolbar:false" contenteditable="false">function sysCall_init()
+    -- do some initialization here
+    joint=sim.getObjectHandle('joint')
+    set=0
+end
+ 
+function sysCall_actuation()
+    -- put your actuation code here
+    message,auiliaryData=sim.getSimulatorMessage()
+    while message~=-1 do
+        if(message==sim.message_keypress)then
+            if(auiliaryData[1]==2009)then
+                set=set+0.01
+                sim.setJointTargetPosition(joint,set)
+            end
+        end
+    message,auiliaryData=sim.getSimulatorMessage()
+    end
+end</pre>
+<p></p><h3>可控制運動-2</h3>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/7ui7HK5A3l4" width="560"></iframe></p>
+<p>程式碼  (注:下方程式碼有修改 degset(每次旋轉的角度)不會小於1</p>
+<pre class="brush:lua;auto-links:false;toolbar:false" contenteditable="false">function sysCall_init()
+    -- do some initialization here
+    joint=sim.getObjectHandle('joint')
+    set=0
+    degset=1
+end
+ 
+function sysCall_actuation()
+    -- put your actuation code here
+    message,auxiliaryData=sim.getSimulatorMessage()
+    while message~=-1 do
+        if (message==sim.message_keypress) then
+            if (auxiliaryData[1]==2009) then
+            set=set+degset
+            sim.setJointTargetPosition(joint,set*math.pi/180)
+            end
+            if (auxiliaryData[1]==2010) then
+            set=set-degset
+            sim.setJointTargetPosition(joint,set*math.pi/180)
+            end
+            if (auxiliaryData[1]==2007) then
+                degset=degset+5
+                print(degset)
+            end
+            if (auxiliaryData[1]==2008) then
+                degset=degset-5
+                if(degset&lt;1) then
+                    degset=1
+                end
+                print(degset)
+            end
+        end
+    message,auxiliaryData=sim.getSimulatorMessage()
+    end
+end
+    </pre>
+<p></p><h3>CODE 指令解說</h3>
 <p>部分LUA指令講解</p>
 <p><strong>1.sim.getObjectHandle</strong></p>
 <p>使用範例如下</p>
@@ -241,9 +302,156 @@ end
 <p><span>使用範例</span></p>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">sim.wait(0.01)</pre>
 <p>只能在線程控制中使用(Threaded chil script)</p>
-<p>為暫停指令，括弧內單位為秒</p><h3>機械手臂設定範例</h3>
+<p>為暫停指令，括弧內單位為秒</p>
+<h3>機械手臂設定範例</h3>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/s8eRsonlKHo" width="560"></iframe></p>
-<h2>舊資料</h2>
+<p></p>
+<h3>按鍵控制代碼</h3>
+<table border="1" cellpadding="0" cellspacing="0" style="width: 590px;">
+<tbody>
+<tr style="height: 26px;">
+<td style="width: 40px; height: 26px; text-align: center;"><strong>按鍵</strong></td>
+<td style="width: 71px; height: 26px; text-align: center;">對應代碼</td>
+<td style="width: 34px; height: 26px; text-align: center;"><strong>按鍵</strong></td>
+<td style="width: 69px; height: 26px; text-align: center;"><span>對應代碼</span></td>
+<td style="width: 45px; height: 26px; text-align: center;"><strong>按鍵</strong></td>
+<td style="width: 64px; height: 26px; text-align: center;"><span>對應代碼</span></td>
+<td style="width: 50px; height: 26px; text-align: center;"><strong>按鍵</strong></td>
+<td style="width: 71px; height: 26px; text-align: center;"><span>對應代碼</span></td>
+<td style="width: 42px; height: 26px; text-align: center;"><strong>按鍵</strong></td>
+<td style="width: 62px; height: 26px; text-align: center;"><span>對應代碼</span></td>
+<td style="width: 40.9271px; height: 26px; text-align: center;"><strong>按鍵</strong></td>
+<td style="width: 74.0729px; height: 26px; text-align: center;"><span>對應代碼</span></td>
+</tr>
+<tr style="height: 26px;">
+<td style="width: 40px; height: 26px; text-align: center;"><strong>a</strong></td>
+<td style="width: 71px; height: 26px; text-align: center;">97</td>
+<td style="width: 34px; height: 26px; text-align: center;"><strong>j</strong></td>
+<td style="width: 69px; height: 26px; text-align: center;">106</td>
+<td style="width: 45px; height: 26px; text-align: center;"><strong>s</strong></td>
+<td style="width: 64px; height: 26px; text-align: center;">115</td>
+<td style="width: 50px; height: 26px; text-align: center;"><strong>0</strong></td>
+<td style="width: 71px; height: 26px; text-align: center;">48</td>
+<td style="width: 42px; height: 26px; text-align: center;"><strong>9</strong></td>
+<td style="width: 62px; height: 26px; text-align: center;">57</td>
+<td style="width: 40.9271px; height: 26px; text-align: center;"><strong>.</strong></td>
+<td style="width: 74.0729px; height: 26px; text-align: center;">46</td>
+</tr>
+<tr style="height: 26px;">
+<td style="width: 40px; height: 26px; text-align: center;"><strong>b</strong></td>
+<td style="width: 71px; height: 26px; text-align: center;">98</td>
+<td style="width: 34px; height: 26px; text-align: center;"><strong>k</strong></td>
+<td style="width: 69px; height: 26px; text-align: center;">107</td>
+<td style="width: 45px; height: 26px; text-align: center;"><strong>t</strong></td>
+<td style="width: 64px; height: 26px; text-align: center;">116</td>
+<td style="width: 50px; height: 26px; text-align: center;"><strong>1</strong></td>
+<td style="width: 71px; height: 26px; text-align: center;">49</td>
+<td style="width: 42px; height: 26px; text-align: center;"><strong>+</strong></td>
+<td style="width: 62px; height: 26px; text-align: center;">43</td>
+<td style="width: 40.9271px; height: 26px; text-align: center;"><strong>;</strong></td>
+<td style="width: 74.0729px; height: 26px; text-align: center;">59</td>
+</tr>
+<tr style="height: 26px;">
+<td style="width: 40px; height: 26px; text-align: center;"><strong>c</strong></td>
+<td style="width: 71px; height: 26px; text-align: center;">99</td>
+<td style="width: 34px; height: 26px; text-align: center;"><strong>l</strong></td>
+<td style="width: 69px; height: 26px; text-align: center;">108</td>
+<td style="width: 45px; height: 26px; text-align: center;"><strong>u</strong></td>
+<td style="width: 64px; height: 26px; text-align: center;">117</td>
+<td style="width: 50px; height: 26px; text-align: center;"><strong>2</strong></td>
+<td style="width: 71px; height: 26px; text-align: center;">50</td>
+<td style="width: 42px; height: 26px; text-align: center;"><strong>-</strong></td>
+<td style="width: 62px; height: 26px; text-align: center;">45</td>
+<td style="width: 40.9271px; height: 26px; text-align: center;"><strong>'</strong></td>
+<td style="width: 74.0729px; height: 26px; text-align: center;">39</td>
+</tr>
+<tr style="height: 26px;">
+<td style="width: 40px; height: 26px; text-align: center;"><strong>d</strong></td>
+<td style="width: 71px; height: 26px; text-align: center;">100</td>
+<td style="width: 34px; height: 26px; text-align: center;"><strong>m</strong></td>
+<td style="width: 69px; height: 26px; text-align: center;">109</td>
+<td style="width: 45px; height: 26px; text-align: center;"><strong>v</strong></td>
+<td style="width: 64px; height: 26px; text-align: center;">118</td>
+<td style="width: 50px; height: 26px; text-align: center;"><strong>3</strong></td>
+<td style="width: 71px; height: 26px; text-align: center;">51</td>
+<td style="width: 42px; height: 26px; text-align: center;"><strong>*</strong></td>
+<td style="width: 62px; height: 26px; text-align: center;">42</td>
+<td style="width: 40.9271px; height: 26px; text-align: center;"><strong>[</strong></td>
+<td style="width: 74.0729px; height: 26px; text-align: center;">91</td>
+</tr>
+<tr style="height: 28px;">
+<td style="width: 40px; height: 28px; text-align: center;"><strong>e</strong></td>
+<td style="width: 71px; height: 28px; text-align: center;">101</td>
+<td style="width: 34px; height: 28px; text-align: center;"><strong>n</strong></td>
+<td style="width: 69px; height: 28px; text-align: center;">110</td>
+<td style="width: 45px; height: 28px; text-align: center;"><strong>w</strong></td>
+<td style="width: 64px; height: 28px; text-align: center;">119</td>
+<td style="width: 50px; height: 28px; text-align: center;"><strong>4</strong></td>
+<td style="width: 71px; height: 28px; text-align: center;">52</td>
+<td style="width: 42px; height: 28px; text-align: center;"><strong>/</strong></td>
+<td style="width: 62px; height: 28px; text-align: center;">47</td>
+<td style="width: 40.9271px; height: 28px; text-align: center;"><strong>]</strong></td>
+<td style="width: 74.0729px; height: 28px; text-align: center;">93</td>
+</tr>
+<tr style="height: 28.1597px;">
+<td style="width: 40px; height: 28.1597px; text-align: center;"><strong>f</strong></td>
+<td style="width: 71px; height: 28.1597px; text-align: center;">102</td>
+<td style="width: 34px; height: 28.1597px; text-align: center;"><strong>o</strong></td>
+<td style="width: 69px; height: 28.1597px; text-align: center;">111</td>
+<td style="width: 45px; height: 28.1597px; text-align: center;"><strong>x</strong></td>
+<td style="width: 64px; height: 28.1597px; text-align: center;">120</td>
+<td style="width: 50px; height: 28.1597px; text-align: center;"><strong>5</strong></td>
+<td style="width: 71px; height: 28.1597px; text-align: center;">53</td>
+<td style="width: 42px; height: 28.1597px; text-align: center;"><strong>=</strong></td>
+<td style="width: 62px; height: 28.1597px; text-align: center;">61</td>
+<td style="width: 40.9271px; height: 28.1597px; text-align: center;"><strong>方向鍵上</strong></td>
+<td style="width: 74.0729px; height: 28.1597px; text-align: center;">2007</td>
+</tr>
+<tr style="height: 28px;">
+<td style="width: 40px; height: 28px; text-align: center;"><strong>g</strong></td>
+<td style="width: 71px; height: 28px; text-align: center;">103</td>
+<td style="width: 34px; height: 28px; text-align: center;"><strong>p</strong></td>
+<td style="width: 69px; height: 28px; text-align: center;">112</td>
+<td style="width: 45px; height: 28px; text-align: center;"><strong>y</strong></td>
+<td style="width: 64px; height: 28px; text-align: center;">121</td>
+<td style="width: 50px; height: 28px; text-align: center;"><strong>6</strong></td>
+<td style="width: 71px; height: 28px; text-align: center;">54</td>
+<td style="width: 42px; height: 28px; text-align: center;"><strong>`</strong></td>
+<td style="width: 62px; height: 28px; text-align: center;">96</td>
+<td style="width: 40.9271px; height: 28px; text-align: center;"><strong>方向鍵下</strong></td>
+<td style="width: 74.0729px; height: 28px; text-align: center;">2008</td>
+</tr>
+<tr style="height: 28px;">
+<td style="width: 40px; height: 28px; text-align: center;"><strong>h</strong></td>
+<td style="width: 71px; height: 28px; text-align: center;">104</td>
+<td style="width: 34px; height: 28px; text-align: center;"><strong>q</strong></td>
+<td style="width: 69px; height: 28px; text-align: center;">113</td>
+<td style="width: 45px; height: 28px; text-align: center;"><strong>z</strong></td>
+<td style="width: 64px; height: 28px; text-align: center;">122</td>
+<td style="width: 50px; height: 28px; text-align: center;"><strong>7</strong></td>
+<td style="width: 71px; height: 28px; text-align: center;">55</td>
+<td style="width: 42px; height: 28px; text-align: center;"><strong>\</strong></td>
+<td style="width: 62px; height: 28px; text-align: center;">92</td>
+<td style="width: 40.9271px; height: 28px; text-align: center;"><strong>方向鍵左</strong></td>
+<td style="width: 74.0729px; height: 28px; text-align: center;">2009</td>
+</tr>
+<tr style="height: 28px;">
+<td style="width: 40px; height: 28px; text-align: center;"><strong>i</strong></td>
+<td style="width: 71px; height: 28px; text-align: center;">105</td>
+<td style="width: 34px; height: 28px; text-align: center;"><strong>r</strong></td>
+<td style="width: 69px; height: 28px; text-align: center;">114</td>
+<td style="width: 45px; height: 28px; text-align: center;"></td>
+<td style="width: 64px; height: 28px; text-align: center;"></td>
+<td style="width: 50px; height: 28px; text-align: center;"><strong>8</strong></td>
+<td style="width: 71px; height: 28px; text-align: center;">56</td>
+<td style="width: 42px; height: 28px; text-align: center;"><strong>,</strong></td>
+<td style="width: 62px; height: 28px; text-align: center;">44</td>
+<td style="width: 40.9271px; height: 28px; text-align: center;"><strong>方向鍵右</strong></td>
+<td style="width: 74.0729px; height: 28px; text-align: center;">2010</td>
+</tr>
+</tbody>
+</table>
+<p></p><h2>舊資料</h2>
 <h3>0511 Programming in Lua on multiple program</h3>
 <p>圖檔下載</p>
 <p><a href="/downloads/機械手臂/programming in Lua in multiple program.ttt">programming in Lua in multiple program.ttt</a></p>
@@ -521,6 +729,10 @@ else:
     print ('Failed connecting to remote API server')
     print ('End')
 </pre>
+<p></p>
+<h2>remoteApi in Lua</h2>
+<h3>0513</h3>
+<p>..</p>
 <h1>stage3</h1>
 <h2>每周進度影片</h2>
 <h3>第九周</h3>
@@ -529,11 +741,17 @@ else:
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/zyOrRSpavpE" width="560"></iframe></p>
 <h2>task</h2>
 <h3>task1</h3>
+<<<<<<< HEAD
 <p><a href="http://github.com/40823245/stage3-bg1">stage3-bg1 repo</a> | <a href="http://40823251.github.io/stage3-bg1">stage3-bg1 site</a> | <a href="http://github.com/40823245/cd2021">40823245 repo</a> | <a href="http://40823245.github.io/cd2021">40823245 site</a> | <a href="http://github.com/40823251/cd2021">40823251 repo</a> | <a href="http://40823251.github.io/cd2021">40823251 site</a> | <a href="http://github.com/40823208/cd2021">40823208 repo</a> | <a href="http://40823208.github.io/cd2021">40823208 site</a> | <a href="http://github.com/40823213/cd2021">40823213 repo</a> | <a href="http://40823213.github.io/cd2021">40823213 site</a> | <a href="http://github.com/40823232/cd2021">40823232 repo</a> | <a href="http://40823232.github.io/cd2021">40823232 site</a> | <a href="http://github.com/40823234/cd2021">40823234 repo</a> | <a href="http://40823234.github.io/cd2021">40823234 site</a> | <a href="http://github.com/40823235/cd2021">40823235 repo</a> | <a href="http://40823235.github.io/cd2021">40823235 site</a> | <a href="http://github.com/40823246/cd2021">40823246 repo</a>| <a href="http://40823246.github.io/cd2021">40823246 site</a><br/>----------<br/><a href="http://github.com/40823217/stage3-bg2">stage3-bg2 repo</a> | <a href="http://40823201.github.io/stage3-bg2">stage3-bg2 site</a> | <a href="http://github.com/40823217/cd2021">40823217 repo</a> | <a href="http://40823217.github.io/cd2021">40823217 site</a> | <a href="http://github.com/40823201/cd2021">40823201 repo</a> | <a href="http://40823201.github.io/cd2021">40823201 site</a> | <a href="http://github.com/40823209/cd2021">40823209 repo</a> | <a href="http://40823209.github.io/cd2021">40823209 site</a> | <a href="http://github.com/40823210/cd2021">40823210 repo</a> | <a href="http://40823210.github.io/cd2021">40823210 site</a> | <a href="http://github.com/40823206/cd2021">40823206 repo</a> | <a href="http://40823206.github.io/cd2021">40823206 site</a> | <a href="http://github.com/40823207/cd2021">40823207 repo</a> | <a href="http://40823207.github.io/cd2021">40823207 site</a> | <a href="http://github.com/40823223/cd2021">40823223 repo</a> | <a href="http://40823223.github.io/cd2021">40823223 site</a> | <a href="http://github.com/40823224/cd2021">40823224 repo</a>| <a href="http://40823224.github.io/cd2021">40823224 site</a><br/>----------<br/><a href="http://github.com/40823236/stage3-bg3">stage3-bg3 repo</a> | <a href="http://40823202.github.io/stage3-bg3">stage3-bg3 site</a> | <a href="http://github.com/40823236/cd2021">40823236 repo</a> | <a href="http://40823236.github.io/cd2021">40823236 site</a> | <a href="http://github.com/40823202/cd2021">40823202 repo</a> | <a href="http://40823202.github.io/cd2021">40823202 site</a> | <a href="http://github.com/40823203/cd2021">40823203 repo</a> | <a href="http://40823203.github.io/cd2021">40823203 site</a> | <a href="http://github.com/40823212/cd2021">40823212 repo</a> | <a href="http://40823212.github.io/cd2021">40823212 site</a> | <a href="http://github.com/40823219/cd2021">40823219 repo</a> | <a href="http://40823219.github.io/cd2021">40823219 site</a> | <a href="http://github.com/40823222/cd2021">40823222 repo</a> | <a href="http://40823222.github.io/cd2021">40823222 site</a> | <a href="http://github.com/40823231-2/cd2021">40823231-2 repo</a> | <a href="http://40823231-2.github.io/cd2021">40823231-2 site</a> | <a href="http://github.com/40823244/cd2021">40823244 repo</a>| <a href="http://40823244.github.io/cd2021">40823244 site</a><br/>----------<br/><a href="http://github.com/40823239/stage3-bg4">stage3-bg4 repo</a> | <a href="http://s40723140.github.io/stage3-bg4">stage3-bg4 site</a> | <a href="http://github.com/40823239/cd2021">40823239 repo</a> | <a href="http://40823239.github.io/cd2021">40823239 site</a> | <a href="http://github.com/s40723140/cd2021">s40723140 repo</a> | <a href="http://s40723140.github.io/cd2021">s40723140 site</a> | <a href="http://github.com/s40723128/cd2021">s40723128 repo</a> | <a href="http://s40723128.github.io/cd2021">s40723128 site</a> | <a href="http://github.com/s40723139/cd2021">s40723139 repo</a> | <a href="http://s40723139.github.io/cd2021">s40723139 site</a> | <a href="http://github.com/s40723106/cd2021">s40723106 repo</a> | <a href="http://s40723106.github.io/cd2021">s40723106 site</a> | <a href="http://github.com/s40723135/cd2021">s40723135 repo</a> | <a href="http://s40723135.github.io/cd2021">s40723135 site</a> | <a href="http://github.com/s40723143/cd2021">s40723143 repo</a> | <a href="http://s40723143.github.io/cd2021">s40723143 site</a> | <a href="http://github.com/s40723215/cd2021">s40723215 repo</a>| <a href="http://s40723215.github.io/cd2021">s40723215 site</a><br/>----------<br/><a href="http://github.com/40823221/stage3-bg5">stage3-bg5 repo</a> | <a href="http://40823204.github.io/stage3-bg5">stage3-bg5 site</a> | <a href="http://github.com/40823221/cd2021">40823221 repo</a> | <a href="http://40823221.github.io/cd2021">40823221 site</a> | <a href="http://github.com/40823204/cd2021">40823204 repo</a> | <a href="http://40823204.github.io/cd2021">40823204 site</a> | <a href="http://github.com/40823205/cd2021">40823205 repo</a> | <a href="http://40823205.github.io/cd2021">40823205 site</a> | <a href="http://github.com/40823220/cd2021">40823220 repo</a> | <a href="http://40823220.github.io/cd2021">40823220 site</a> | <a href="http://github.com/40823228/cd2021">40823228 repo</a> | <a href="http://40823228.github.io/cd2021">40823228 site</a> | <a href="http://github.com/40823237/cd2021">40823237 repo</a> | <a href="http://40823237.github.io/cd2021">40823237 site</a> | <a href="http://github.com/40823242/cd2021">40823242 repo</a> | <a href="http://40823242.github.io/cd2021">40823242 site</a> | <a href="http://github.com/40823250/cd2021">40823250 repo</a>| <a href="http://40823250.github.io/cd2021">40823250 site</a> | <a href="http://github.com/40832244/cd2021">40832244 repo</a>| <a href="http://40832244.github.io/cd2021">40832244 site</a><br/>----------<br/><a href="http://github.com/40823225/stage3-bg6">stage3-bg6 repo</a> | <a href="http://40823214.github.io/stage3-bg6">stage3-bg6 site</a> | <a href="http://github.com/40823225/cd2021">40823225 repo</a> | <a href="http://40823225.github.io/cd2021">40823225 site</a> | <a href="http://github.com/40823214/cd2021">40823214 repo</a> | <a href="http://40823214.github.io/cd2021">40823214 site</a> | <a href="http://github.com/40823218/cd2021">40823218 repo</a> | <a href="http://40823218.github.io/cd2021">40823218 site</a> | <a href="http://github.com/40823211/cd2021">40823211 repo</a> | <a href="http://40823211.github.io/cd2021">40823211 site</a> | <a href="http://github.com/40823248/cd2021">40823248 repo</a> | <a href="http://40823248.github.io/cd2021">40823248 site</a> | <a href="http://github.com/40823247/cd2021">40823247 repo</a> | <a href="http://40823247.github.io/cd2021">40823247 site</a> | <a href="http://github.com/40823216/cd2021">40823216 repo</a> | <a href="http://40823216.github.io/cd2021">40823216 site</a> | <a href="http://github.com/40823238/cd2021">40823238 repo</a>| <a href="http://40823238.github.io/cd2021">40823238 site</a><br/>----------<br/><a href="http://github.com/40623144/stage3-bg7">stage3-bg7 repo</a> | <a href="http://40823233.github.io/stage3-bg7">stage3-bg7 site</a> | <a href="http://github.com/40623144/cd2021">40623144 repo</a> | <a href="http://40623144.github.io/cd2021">40623144 site</a> | <a href="http://github.com/40823233/cd2021">40823233 repo</a> | <a href="http://40823233.github.io/cd2021">40823233 site</a> | <a href="http://github.com/s40723224/cd2021">s40723224 repo</a> | <a href="http://s40723224.github.io/cd2021">s40723224 site</a> | <a href="http://github.com/40823241/cd2021">40823241 repo</a> | <a href="http://40823241.github.io/cd2021">40823241 site</a> | <a href="http://github.com/40423155/cd2021">40423155 repo</a> | <a href="http://40423155.github.io/cd2021">40423155 site</a> | <a href="http://github.com/40823227/cd2021">40823227 repo</a> | <a href="http://40823227.github.io/cd2021">40823227 site</a> | <a href="http://github.com/s40723233/cd2021">s40723233 repo</a> | <a href="http://s40723233.github.io/cd2021">s40723233 site</a><br/>----------</p><h3>task2</h3>
+=======
+<p><a href="http://github.com/40823245/stage3-bg1">stage3-bg1 repo</a> | <a href="http://40823251.github.io/stage3-bg1">stage3-bg1 site</a> | <a href="http://github.com/40823245/cd2021">40823245 repo</a> | <a href="http://40823245.github.io/cd2021">40823245 site</a> | <a href="http://github.com/40823251/cd2021">40823251 repo</a> | <a href="http://40823251.github.io/cd2021">40823251 site</a> | <a href="http://github.com/40823208/cd2021">40823208 repo</a> | <a href="http://40823208.github.io/cd2021">40823208 site</a> | <a href="http://github.com/40823213/cd2021">40823213 repo</a> | <a href="http://40823213.github.io/cd2021">40823213 site</a> | <a href="http://github.com/40823232/cd2021">40823232 repo</a> | <a href="http://40823232.github.io/cd2021">40823232 site</a> | <a href="http://github.com/40823234/cd2021">40823234 repo</a> | <a href="http://40823234.github.io/cd2021">40823234 site</a> | <a href="http://github.com/40823235/cd2021">40823235 repo</a> | <a href="http://40823235.github.io/cd2021">40823235 site</a> | <a href="http://github.com/40823246/cd2021">40823246 repo</a>| <a href="http://40823246.github.io/cd2021">40823246 site</a><br/>----------<br/><a href="http://github.com/40823217/stage3-bg2">stage3-bg2 repo</a> | <a href="http://40823201.github.io/stage3-bg2">stage3-bg2 site</a> | <a href="http://github.com/40823217/cd2021">40823217 repo</a> | <a href="http://40823217.github.io/cd2021">40823217 site</a> | <a href="http://github.com/40823201/cd2021">40823201 repo</a> | <a href="http://40823201.github.io/cd2021">40823201 site</a> | <a href="http://github.com/40823209/cd2021">40823209 repo</a> | <a href="http://40823209.github.io/cd2021">40823209 site</a> | <a href="http://github.com/40823210/cd2021">40823210 repo</a> | <a href="http://40823210.github.io/cd2021">40823210 site</a> | <a href="http://github.com/40823206/cd2021">40823206 repo</a> | <a href="http://40823206.github.io/cd2021">40823206 site</a> | <a href="http://github.com/40823207/cd2021">40823207 repo</a> | <a href="http://40823207.github.io/cd2021">40823207 site</a> | <a href="http://github.com/40823223/cd2021">40823223 repo</a> | <a href="http://40823223.github.io/cd2021">40823223 site</a> | <a href="http://github.com/40823224/cd2021">40823224 repo</a>| <a href="http://40823224.github.io/cd2021">40823224 site</a><br/>----------<br/><a href="http://github.com/40823236/stage3-bg3">stage3-bg3 repo</a> | <a href="http://40823202.github.io/stage3-bg3">stage3-bg3 site</a> | <a href="http://github.com/40823236/cd2021">40823236 repo</a> | <a href="http://40823236.github.io/cd2021">40823236 site</a> | <a href="http://github.com/40823202/cd2021">40823202 repo</a> | <a href="http://40823202.github.io/cd2021">40823202 site</a> | <a href="http://github.com/40823203/cd2021">40823203 repo</a> | <a href="http://40823203.github.io/cd2021">40823203 site</a> | <a href="http://github.com/40823212/cd2021">40823212 repo</a> | <a href="http://40823212.github.io/cd2021">40823212 site</a> | <a href="http://github.com/40823219/cd2021">40823219 repo</a> | <a href="http://40823219.github.io/cd2021">40823219 site</a> | <a href="http://github.com/40823222/cd2021">40823222 repo</a> | <a href="http://40823222.github.io/cd2021">40823222 site</a> | <a href="http://github.com/40823231-2/cd2021">40823231-2 repo</a> | <a href="http://40823231-2.github.io/cd2021">40823231-2 site</a> | <a href="http://github.com/40823244/cd2021">40823244 repo</a>| <a href="http://40823244.github.io/cd2021">40823244 site</a><br/>----------<br/><a href="http://github.com/40823239/stage3-bg4">stage3-bg4 repo</a> | <a href="http://s40723140.github.io/stage3-bg4">stage3-bg4 site</a> | <a href="http://github.com/40823239/cd2021">40823239 repo</a> | <a href="http://40823239.github.io/cd2021">40823239 site</a> | <a href="http://github.com/s40723140/cd2021">s40723140 repo</a> | <a href="http://s40723140.github.io/cd2021">s40723140 site</a> | <a href="http://github.com/s40723128/cd2021">s40723128 repo</a> | <a href="http://s40723128.github.io/cd2021">s40723128 site</a> | <a href="http://github.com/s40723139/cd2021">s40723139 repo</a> | <a href="http://s40723139.github.io/cd2021">s40723139 site</a> | <a href="http://github.com/s40723106/cd2021">s40723106 repo</a> | <a href="http://s40723106.github.io/cd2021">s40723106 site</a> | <a href="http://github.com/s40723135/cd2021">s40723135 repo</a> | <a href="http://s40723135.github.io/cd2021">s40723135 site</a> | <a href="http://github.com/s40723143/cd2021">s40723143 repo</a> | <a href="http://s40723143.github.io/cd2021">s40723143 site</a> | <a href="http://github.com/s40723215/cd2021">s40723215 repo</a>| <a href="http://s40723215.github.io/cd2021">s40723215 site</a><br/>----------<br/><a href="http://github.com/40823221/stage3-bg5">stage3-bg5 repo</a> | <a href="http://40823204.github.io/stage3-bg5">stage3-bg5 site</a> | <a href="http://github.com/40823221/cd2021">40823221 repo</a> | <a href="http://40823221.github.io/cd2021">40823221 site</a> | <a href="http://github.com/40823204/cd2021">40823204 repo</a> | <a href="http://40823204.github.io/cd2021">40823204 site</a> | <a href="http://github.com/40823205/cd2021">40823205 repo</a> | <a href="http://40823205.github.io/cd2021">40823205 site</a> | <a href="http://github.com/40823220/cd2021">40823220 repo</a> | <a href="http://40823220.github.io/cd2021">40823220 site</a> | <a href="http://github.com/40823228/cd2021">40823228 repo</a> | <a href="http://40823228.github.io/cd2021">40823228 site</a> | <a href="http://github.com/40823237/cd2021">40823237 repo</a> | <a href="http://40823237.github.io/cd2021">40823237 site</a> | <a href="http://github.com/40823242/cd2021">40823242 repo</a> | <a href="http://40823242.github.io/cd2021">40823242 site</a> | <a href="http://github.com/40823250/cd2021">40823250 repo</a>| <a href="http://40823250.github.io/cd2021">40823250 site</a> | <a href="http://github.com/40832244/cd2021">40832244 repo</a>| <a href="http://40832244.github.io/cd2021">40832244 site</a><br/>----------<br/><a href="http://github.com/40823225/stage3-bg6">stage3-bg6 repo</a> | <a href="http://40823214.github.io/stage3-bg6">stage3-bg6 site</a> | <a href="http://github.com/40823225/cd2021">40823225 repo</a> | <a href="http://40823225.github.io/cd2021">40823225 site</a> | <a href="http://github.com/40823214/cd2021">40823214 repo</a> | <a href="http://40823214.github.io/cd2021">40823214 site</a> | <a href="http://github.com/40823218/cd2021">40823218 repo</a> | <a href="http://40823218.github.io/cd2021">40823218 site</a> | <a href="http://github.com/40823211/cd2021">40823211 repo</a> | <a href="http://40823211.github.io/cd2021">40823211 site</a> | <a href="http://github.com/40823248/cd2021">40823248 repo</a> | <a href="http://40823248.github.io/cd2021">40823248 site</a> | <a href="http://github.com/40823247/cd2021">40823247 repo</a> | <a href="http://40823247.github.io/cd2021">40823247 site</a> | <a href="http://github.com/40823216/cd2021">40823216 repo</a> | <a href="http://40823216.github.io/cd2021">40823216 site</a> | <a href="http://github.com/40823238/cd2021">40823238 repo</a>| <a href="http://40823238.github.io/cd2021">40823238 site</a><br/>----------<br/><a href="http://github.com/40623144/stage3-bg7">stage3-bg7 repo</a> | <a href="http://40823233.github.io/stage3-bg7">stage3-bg7 site</a> | <a href="http://github.com/40623144/cd2021">40623144 repo</a> | <a href="http://40623144.github.io/cd2021">40623144 site</a> | <a href="http://github.com/40823233/cd2021">40823233 repo</a> | <a href="http://40823233.github.io/cd2021">40823233 site</a> | <a href="http://github.com/s40723224/cd2021">s40723224 repo</a> | <a href="http://s40723224.github.io/cd2021">s40723224 site</a> | <a href="http://github.com/40823241/cd2021">40823241 repo</a> | <a href="http://40823241.github.io/cd2021">40823241 site</a> | <a href="http://github.com/40423155/cd2021">40423155 repo</a> | <a href="http://40423155.github.io/cd2021">40423155 site</a> | <a href="http://github.com/40823227/cd2021">40823227 repo</a> | <a href="http://40823227.github.io/cd2021">40823227 site</a> | <a href="http://github.com/s40723233/cd2021">s40723233 repo</a> | <a href="http://s40723233.github.io/cd2021">s40723233 site</a><br/>----------</p>
+<h3>task2</h3>
+>>>>>>> fc758fe1cc279d0f501a9c5cb14e840146ebc5bd
 <p><span>無</span></p>
 <h3>task3</h3>
 <p><span>無</span></p>
 <h2>討論</h2>
+<p>本小組的討論時間在組員的協調下，最終定為每個禮拜一的晚上11.。</p>
 <h3>discord</h3>
 <h3>第一次討論</h3>
 <p>4/27</p>
@@ -548,3 +766,10 @@ else:
 <p><img alt="" height="1028" src="/images/第三次討論1.PNG" width="1848"/></p>
 <p><img alt="" height="1028" src="/images/第三次討論2.PNG" width="1848"/></p>
 <p><img alt="" height="500" src="/images/第三次討論3.PNG" width="1848"/></p>
+<h2>遇到的問題</h2>
+<h3>更新出錯</h3>
+<p><img alt="" height="252" src="/images/遇到的問題1.jpg" width="800"/></p>
+<p><img alt="" height="452" src="/images/遇到的問題2.jpg" width="800"/></p>
+<p>參考網站:<a href="https://blog.csdn.net/yxlshk/article/details/79944535">https://blog.csdn.net/yxlshk/article/details/79944535</a></p>
+<p>說明:由於兩位組員通時進行推動的動作，所以出現了有位組員pull時檔案衝突<span>，</span>我們討論後決定將他的版本退回到上個版本，結果證實此方法可以有效解決這個問題。</p>
+<p></p>
