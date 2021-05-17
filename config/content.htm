@@ -32,8 +32,7 @@
 <p><span>以下為參考資料:</span></p>
 <p><a href="https://blog.csdn.net/qq_29696095/article/details/104406971">https://blog.csdn.net/qq_29696095/article/details/104406971</a><br/><a href="https://blog.csdn.net/qq_29696095/article/details/104474081">https://blog.csdn.net/qq_29696095/article/details/104474081</a><br/><a href="https://www.coppeliarobotics.com/helpFiles/en/inverseKinematicsTutorial.htm">https://www.coppeliarobotics.com/helpFiles/en/inverseKinematicsTutorial.htm</a></p>
 <p><a href="http://mde.tw/cd2021/downloads/V-REP%20Lecture.pdf">http://mde.tw/cd2021/downloads/V-REP%20Lecture.pdf</a><br/><a href="http://hades.mech.northwestern.edu/index.php/CoppeliaSim_Introduction">http://hades.mech.northwestern.edu/index.php/CoppeliaSim_Introduction</a><br/><a href="https://www.coppeliarobotics.com/helpFiles/index.html">https://www.coppeliarobotics.com/helpFiles/index.html</a><br/><a href="http://mde.tw/cd2021/content/V-rep.html">http://mde.tw/cd2021/content/V-rep.html</a></p>
-<h1>CoppliaSim模擬圖檔</h1>
-<h2>架設場景</h2>
+<h1>CoppliaSim程式模擬</h1><h2>架設場景</h2>
 <h3>0510對軸進行旋轉控制</h3>
 <p>使用coppeliaSim 先叫出一個簡單的軸</p>
 <p>來進行模擬控制</p>
@@ -223,7 +222,8 @@ function sysCall_actuation()
     message,auiliaryData=sim.getSimulatorMessage()
     end
 end</pre>
-<p></p><h3>2-可變速之旋轉運動</h3>
+<p></p>
+<h3>2-可變速之旋轉運動</h3>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/7ui7HK5A3l4" width="560"></iframe></p>
 <p>程式碼  (注:下方程式碼有修改 degset(每次旋轉的角度)不會小於1</p>
 <pre class="brush:lua;auto-links:false;toolbar:false" contenteditable="false">function sysCall_init()
@@ -309,7 +309,8 @@ function sysCall_actuation()
     message,auxiliaryData=sim.getSimulatorMessage()
     end
 end</pre>
-<p></p><h3>CODE 指令解說</h3>
+<p></p>
+<h3>CODE 指令解說</h3>
 <p>部分LUA指令講解</p>
 <p><strong>1.sim.getObjectHandle</strong></p>
 <p>使用範例如下</p>
@@ -352,7 +353,16 @@ end
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">sim.wait(0.01)</pre>
 <p>只能在線程控制中使用(Threaded chil script)</p>
 <p>為暫停指令，括弧內單位為秒</p>
-<h3>機械手臂設定範例</h3>
+<h3>remoteApi python 指令對照</h3>
+<p><strong>1.simxGetObjectHandle</strong></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">ret,XXX=vrep.simxGetObjectHandle(clientID,"joint",opmode)</pre>
+<p><span>XXX為一個自行定義的名詞，此指令為定義XXX為一個連接軸，而('joint')為該軸在場景裡面的名稱</span></p>
+<p>與Lua語法類似</p>
+<p><strong>2.simxSetJointTargetPosition</strong></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false"> vrep.simxSetJointTargetPosition(clientID,XXX,90,opmode)</pre>
+<p>講解 XXX移動至90這個位置，或旋轉至90rad，XXX請參見第一個指令講解,角度預設為RAD</p>
+<p>若要需求為旋轉至90deg，指令參考如下</p>
+<p><span>與Lua語法類似</span></p><h3>機械手臂設定範例</h3>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/s8eRsonlKHo" width="560"></iframe></p>
 <p></p>
 <h3>按鍵控制代碼</h3>
@@ -783,14 +793,9 @@ else:
 <h2>remoteApi in Lua</h2>
 <h3>0513</h3>
 <p>..</p>
-<h1>stage3</h1>
-<h2>每周進度影片</h2>
-<h3>第九周</h3>
-<p><iframe allowfullscreen="allowfullscreen" data-mce-fragment="1" height="314" src="//www.youtube.com/embed/dgA4QAF2RTI" width="560"></iframe></p>
-<h3>第十周</h3>
-<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/zyOrRSpavpE" width="560"></iframe></p>
-<h2>task</h2>
-<h3>task1</h3>
+<h1>tesk</h1>
+<p>.</p>
+<h2>tesk1</h2>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">def stu2b(account):
  return account
 teamb = []
@@ -866,9 +871,168 @@ for i in teamb[0:]:    #小組 組長 其他六個組員
  
 print(output)     #輸出</pre>
 <p><a href="http://github.com/40823245/stage3-bg1">stage3-bg1 repo</a> | <a href="http://40823251.github.io/stage3-bg1">stage3-bg1 site</a> | <a href="http://github.com/40823245/cd2021">40823245 repo</a> | <a href="http://40823245.github.io/cd2021">40823245 site</a> | <a href="http://github.com/40823251/cd2021">40823251 repo</a> | <a href="http://40823251.github.io/cd2021">40823251 site</a> | <a href="http://github.com/40823208/cd2021">40823208 repo</a> | <a href="http://40823208.github.io/cd2021">40823208 site</a> | <a href="http://github.com/40823213/cd2021">40823213 repo</a> | <a href="http://40823213.github.io/cd2021">40823213 site</a> | <a href="http://github.com/40823232/cd2021">40823232 repo</a> | <a href="http://40823232.github.io/cd2021">40823232 site</a> | <a href="http://github.com/40823234/cd2021">40823234 repo</a> | <a href="http://40823234.github.io/cd2021">40823234 site</a> | <a href="http://github.com/40823235/cd2021">40823235 repo</a> | <a href="http://40823235.github.io/cd2021">40823235 site</a> | <a href="http://github.com/40823246/cd2021">40823246 repo</a>| <a href="http://40823246.github.io/cd2021">40823246 site</a><br/>----------<a href="http://github.com/40823217/stage3-bg2">stage3-bg2 repo</a> | <a href="http://40823201.github.io/stage3-bg2">stage3-bg2 site</a> | <a href="http://github.com/40823217/cd2021">40823217 repo</a> | <a href="http://40823217.github.io/cd2021">40823217 site</a> | <a href="http://github.com/40823201/cd2021">40823201 repo</a> | <a href="http://40823201.github.io/cd2021">40823201 site</a> | <a href="http://github.com/40823209/cd2021">40823209 repo</a> | <a href="http://40823209.github.io/cd2021">40823209 site</a> | <a href="http://github.com/40823210/cd2021">40823210 repo</a> | <a href="http://40823210.github.io/cd2021">40823210 site</a> | <a href="http://github.com/40823206/cd2021">40823206 repo</a> | <a href="http://40823206.github.io/cd2021">40823206 site</a> | <a href="http://github.com/40823207/cd2021">40823207 repo</a> | <a href="http://40823207.github.io/cd2021">40823207 site</a> | <a href="http://github.com/40823223/cd2021">40823223 repo</a> | <a href="http://40823223.github.io/cd2021">40823223 site</a> | <a href="http://github.com/40823224/cd2021">40823224 repo</a>| <a href="http://40823224.github.io/cd2021">40823224 site</a><br/>----------<a href="http://github.com/40823236/stage3-bg3">stage3-bg3 repo</a> | <a href="http://40823202.github.io/stage3-bg3">stage3-bg3 site</a> | <a href="http://github.com/40823236/cd2021">40823236 repo</a> | <a href="http://40823236.github.io/cd2021">40823236 site</a> | <a href="http://github.com/40823202/cd2021">40823202 repo</a> | <a href="http://40823202.github.io/cd2021">40823202 site</a> | <a href="http://github.com/40823203/cd2021">40823203 repo</a> | <a href="http://40823203.github.io/cd2021">40823203 site</a> | <a href="http://github.com/40823212/cd2021">40823212 repo</a> | <a href="http://40823212.github.io/cd2021">40823212 site</a> | <a href="http://github.com/40823219/cd2021">40823219 repo</a> | <a href="http://40823219.github.io/cd2021">40823219 site</a> | <a href="http://github.com/40823222/cd2021">40823222 repo</a> | <a href="http://40823222.github.io/cd2021">40823222 site</a> | <a href="http://github.com/40823231-2/cd2021">40823231-2 repo</a> | <a href="http://40823231-2.github.io/cd2021">40823231-2 site</a> | <a href="http://github.com/40823244/cd2021">40823244 repo</a>| <a href="http://40823244.github.io/cd2021">40823244 site</a><br/>----------<a href="http://github.com/40823239/stage3-bg4">stage3-bg4 repo</a> | <a href="http://s40723140.github.io/stage3-bg4">stage3-bg4 site</a> | <a href="http://github.com/40823239/cd2021">40823239 repo</a> | <a href="http://40823239.github.io/cd2021">40823239 site</a> | <a href="http://github.com/s40723140/cd2021">s40723140 repo</a> | <a href="http://s40723140.github.io/cd2021">s40723140 site</a> | <a href="http://github.com/s40723128/cd2021">s40723128 repo</a> | <a href="http://s40723128.github.io/cd2021">s40723128 site</a> | <a href="http://github.com/s40723139/cd2021">s40723139 repo</a> | <a href="http://s40723139.github.io/cd2021">s40723139 site</a> | <a href="http://github.com/s40723106/cd2021">s40723106 repo</a> | <a href="http://s40723106.github.io/cd2021">s40723106 site</a> | <a href="http://github.com/s40723135/cd2021">s40723135 repo</a> | <a href="http://s40723135.github.io/cd2021">s40723135 site</a> | <a href="http://github.com/s40723143/cd2021">s40723143 repo</a> | <a href="http://s40723143.github.io/cd2021">s40723143 site</a> | <a href="http://github.com/s40723215/cd2021">s40723215 repo</a>| <a href="http://s40723215.github.io/cd2021">s40723215 site</a><br/>----------<a href="http://github.com/40823221/stage3-bg5">stage3-bg5 repo</a> | <a href="http://40823204.github.io/stage3-bg5">stage3-bg5 site</a> | <a href="http://github.com/40823221/cd2021">40823221 repo</a> | <a href="http://40823221.github.io/cd2021">40823221 site</a> | <a href="http://github.com/40823204/cd2021">40823204 repo</a> | <a href="http://40823204.github.io/cd2021">40823204 site</a> | <a href="http://github.com/40823205/cd2021">40823205 repo</a> | <a href="http://40823205.github.io/cd2021">40823205 site</a> | <a href="http://github.com/40823220/cd2021">40823220 repo</a> | <a href="http://40823220.github.io/cd2021">40823220 site</a> | <a href="http://github.com/40823228/cd2021">40823228 repo</a> | <a href="http://40823228.github.io/cd2021">40823228 site</a> | <a href="http://github.com/40823237/cd2021">40823237 repo</a> | <a href="http://40823237.github.io/cd2021">40823237 site</a> | <a href="http://github.com/40823242/cd2021">40823242 repo</a> | <a href="http://40823242.github.io/cd2021">40823242 site</a> | <a href="http://github.com/40823250/cd2021">40823250 repo</a>| <a href="http://40823250.github.io/cd2021">40823250 site</a> | <a href="http://github.com/40832244/cd2021">40832244 repo</a>| <a href="http://40832244.github.io/cd2021">40832244 site</a><br/>----------<a href="http://github.com/40823225/stage3-bg6">stage3-bg6 repo</a> | <a href="http://40823214.github.io/stage3-bg6">stage3-bg6 site</a> | <a href="http://github.com/40823225/cd2021">40823225 repo</a> | <a href="http://40823225.github.io/cd2021">40823225 site</a> | <a href="http://github.com/40823214/cd2021">40823214 repo</a> | <a href="http://40823214.github.io/cd2021">40823214 site</a> | <a href="http://github.com/40823218/cd2021">40823218 repo</a> | <a href="http://40823218.github.io/cd2021">40823218 site</a> | <a href="http://github.com/40823211/cd2021">40823211 repo</a> | <a href="http://40823211.github.io/cd2021">40823211 site</a> | <a href="http://github.com/40823248/cd2021">40823248 repo</a> | <a href="http://40823248.github.io/cd2021">40823248 site</a> | <a href="http://github.com/40823247/cd2021">40823247 repo</a> | <a href="http://40823247.github.io/cd2021">40823247 site</a> | <a href="http://github.com/40823216/cd2021">40823216 repo</a> | <a href="http://40823216.github.io/cd2021">40823216 site</a> | <a href="http://github.com/40823238/cd2021">40823238 repo</a>| <a href="http://40823238.github.io/cd2021">40823238 site</a><br/>----------<a href="http://github.com/40623144/stage3-bg7">stage3-bg7 repo</a> | <a href="http://40823233.github.io/stage3-bg7">stage3-bg7 site</a> | <a href="http://github.com/40623144/cd2021">40623144 repo</a> | <a href="http://40623144.github.io/cd2021">40623144 site</a> | <a href="http://github.com/40823233/cd2021">40823233 repo</a> | <a href="http://40823233.github.io/cd2021">40823233 site</a> | <a href="http://github.com/s40723224/cd2021">s40723224 repo</a> | <a href="http://s40723224.github.io/cd2021">s40723224 site</a> | <a href="http://github.com/40823241/cd2021">40823241 repo</a> | <a href="http://40823241.github.io/cd2021">40823241 site</a> | <a href="http://github.com/40423155/cd2021">40423155 repo</a> | <a href="http://40423155.github.io/cd2021">40423155 site</a> | <a href="http://github.com/40823227/cd2021">40823227 repo</a> | <a href="http://40823227.github.io/cd2021">40823227 site</a> | <a href="http://github.com/s40723233/cd2021">s40723233 repo</a> | <a href="http://s40723233.github.io/cd2021">s40723233 site</a><br/>----------</p>
-<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/jeKMJi211CU" title="YouTube video player" width="560"></iframe></p><h3>task2</h3>
-<h3>task3</h3>
-<p><span>無</span></p><h2>討論</h2>
+<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/jeKMJi211CU" title="YouTube video player" width="560"></iframe></p>
+<h2>tesk2</h2>
+<p>.</p>
+<h3>自動吹笛子機</h3>
+<p>Stage1-bg6 自動吹笛子機remoteApi</p>
+<p>控制:</p>
+<p>f,d,s,j,k,l 分別控制六根不同的桿子往下</p>
+<p>r,e,w,u,i,o 控制六根桿子往上</p>
+<p></p>
+<p>下載</p>
+<p><a href="/downloads/吹笛子程式.rar">吹笛子程式.rar</a></p>
+<p><a href="/downloads/自動吹笛子remoteApi.ttt">自動吹笛子remoteApi.ttt</a></p>
+<p>參考影片</p>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/OpoXLGUx0mQ" width="560"></iframe></p>
+<p>程式參考</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import sim as vrep
+import math
+import random
+import time
+import keyboard
+import math
+#from winsound import Beep
+
+ 
+print ('Start')
+ 
+
+vrep.simxFinish(-1)
+
+clientID = vrep.simxStart('127.0.0.1', 19997, True, True, 5000, 5)
+ 
+if clientID != -1:
+    print ('Connected to remote API server')
+     
+    res = vrep.simxAddStatusbarMessage(
+        clientID, "test-25",
+        vrep.simx_opmode_oneshot)
+    if res not in (vrep.simx_return_ok, vrep.simx_return_novalue_flag):
+        print("Could not add a message to the status bar.")
+ 
+    
+    opmode = vrep.simx_opmode_oneshot_wait
+    STREAMING = vrep.simx_opmode_streaming
+ 
+    
+    vrep.simxStartSimulation(clientID, opmode)
+    ret,joint1=vrep.simxGetObjectHandle(clientID,"Revolute3_1",opmode)
+    ret,joint2=vrep.simxGetObjectHandle(clientID,"Revolute3_2",opmode)
+    ret,joint3=vrep.simxGetObjectHandle(clientID,"Revolute3_3",opmode)
+    ret,joint4=vrep.simxGetObjectHandle(clientID,"Revolute3_4",opmode)
+    ret,joint5=vrep.simxGetObjectHandle(clientID,"Revolute3_5",opmode)
+    ret,joint6=vrep.simxGetObjectHandle(clientID,"Revolute3_6",opmode)
+
+    ret,joint01=vrep.simxGetObjectHandle(clientID,"joint0_1",opmode)
+    ret,joint02=vrep.simxGetObjectHandle(clientID,"joint0_2",opmode)
+    ret,joint03=vrep.simxGetObjectHandle(clientID,"joint0_3",opmode)
+    ret,joint04=vrep.simxGetObjectHandle(clientID,"joint0_4",opmode)
+    ret,joint05=vrep.simxGetObjectHandle(clientID,"joint0_5",opmode)
+    ret,joint06=vrep.simxGetObjectHandle(clientID,"joint0_6",opmode)
+
+    degr=-12*math.pi/180
+    py=0.05
+    set1=False
+    set2=False
+    set3=False
+    set4=False
+    set5=False
+    set6=False
+
+    vrep.simxSetJointTargetPosition(clientID,joint1,0,opmode)
+    vrep.simxSetJointTargetPosition(clientID,joint01,0,opmode)
+    vrep.simxSetJointTargetPosition(clientID,joint2,0,opmode)
+    vrep.simxSetJointTargetPosition(clientID,joint02,0,opmode)
+    vrep.simxSetJointTargetPosition(clientID,joint3,0,opmode)
+    vrep.simxSetJointTargetPosition(clientID,joint03,0,opmode)
+    vrep.simxSetJointTargetPosition(clientID,joint4,0,opmode)
+    vrep.simxSetJointTargetPosition(clientID,joint04,0,opmode)
+    vrep.simxSetJointTargetPosition(clientID,joint5,0,opmode)
+    vrep.simxSetJointTargetPosition(clientID,joint05,0,opmode)
+    vrep.simxSetJointTargetPosition(clientID,joint6,0,opmode)
+    vrep.simxSetJointTargetPosition(clientID,joint06,0,opmode)
+
+    while True:
+        
+        if keyboard.is_pressed("f"):
+            if set1==False:
+                vrep.simxSetJointTargetPosition(clientID,joint1,degr,opmode)
+                vrep.simxSetJointTargetPosition(clientID,joint01,py,opmode)
+                set1=True
+        if keyboard.is_pressed("d"):
+            if set2==False:
+                vrep.simxSetJointTargetPosition(clientID,joint2,degr,opmode)
+                vrep.simxSetJointTargetPosition(clientID,joint02,py,opmode)
+                set2=True
+        if keyboard.is_pressed("s"):
+            if set3==False:
+                vrep.simxSetJointTargetPosition(clientID,joint3,degr,opmode)
+                vrep.simxSetJointTargetPosition(clientID,joint03,py,opmode)
+                set3=True
+        if keyboard.is_pressed("j"):
+            if set4==False:
+                vrep.simxSetJointTargetPosition(clientID,joint4,degr,opmode)
+                vrep.simxSetJointTargetPosition(clientID,joint04,py,opmode)
+                set4=True
+        if keyboard.is_pressed("k"):
+            if set5==False:
+                vrep.simxSetJointTargetPosition(clientID,joint5,degr,opmode)
+                vrep.simxSetJointTargetPosition(clientID,joint05,py,opmode)
+                set5=True
+        if keyboard.is_pressed("l"):
+            if set6==False:
+                vrep.simxSetJointTargetPosition(clientID,joint6,degr,opmode)
+                vrep.simxSetJointTargetPosition(clientID,joint06,py,opmode)
+                set6=True
+
+        
+        if keyboard.is_pressed("r"):
+            if set1==True:
+                vrep.simxSetJointTargetPosition(clientID,joint1,0,opmode)
+                vrep.simxSetJointTargetPosition(clientID,joint01,0,opmode)
+                set1=False
+        if keyboard.is_pressed("e"):
+            if set2==True:
+                vrep.simxSetJointTargetPosition(clientID,joint2,0,opmode)
+                vrep.simxSetJointTargetPosition(clientID,joint02,0,opmode)
+                set2=False
+        if keyboard.is_pressed("w"):
+            if set3==True:
+                vrep.simxSetJointTargetPosition(clientID,joint3,0,opmode)
+                vrep.simxSetJointTargetPosition(clientID,joint03,0,opmode)
+                set3=False
+        if keyboard.is_pressed("u"):
+            if set4==True:
+                vrep.simxSetJointTargetPosition(clientID,joint4,0,opmode)
+                vrep.simxSetJointTargetPosition(clientID,joint04,0,opmode)
+                set4=False
+        if keyboard.is_pressed("i"):
+            if set5==True:
+                vrep.simxSetJointTargetPosition(clientID,joint5,0,opmode)
+                vrep.simxSetJointTargetPosition(clientID,joint05,0,opmode)
+                set5=False
+        if keyboard.is_pressed("o"):
+            if set6==True:
+                vrep.simxSetJointTargetPosition(clientID,joint6,0,opmode)
+                vrep.simxSetJointTargetPosition(clientID,joint06,0,opmode)
+                set6=False
+        
+        #if(set1==true ):
+            #Beep(422, 3000) 
+        
+ 
+ 
+else:
+    print ('Failed connecting to remote API server')
+    print ('End')</pre>
+<p></p><h1>stage3</h1>
+<h2>每周進度影片</h2>
+<h3>第九周</h3>
+<p><iframe allowfullscreen="allowfullscreen" data-mce-fragment="1" height="314" src="//www.youtube.com/embed/dgA4QAF2RTI" width="560"></iframe></p>
+<h3>第十周</h3>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/zyOrRSpavpE" width="560"></iframe></p>
+<h2>討論</h2>
 <p>本小組的討論時間在組員的協調下，最終定為每個禮拜一的晚上11.。</p>
 <h3>discord</h3>
 <h3>第一次討論</h3>
