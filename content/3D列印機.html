@@ -140,8 +140,12 @@ img.add_border {
 <p>上下左右控制噴頭的上下左右</p>
 <p>空白鍵往上</p>
 <p>C鍵往下</p>
+<p>圖檔</p>
+<p><a href="./../downloads/3D print remoteApi.rar">3D print remoteApi program</a></p>
+<p><a href="./../downloads/3D print remoteApi.ttt">3D print remoteApi.ttt</a></p>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/Ib3lePX2Pn0" width="560"></iframe></p>
 <p>程式參考</p>
+<p>5/18 程式修改:將顯示的數值由公尺轉成毫米並且去掉多餘的小數點</p>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import sim as vrep
 import math
 import random
@@ -192,7 +196,7 @@ if clientID != -1:
             cont=float(math.pow(dx,2)+math.pow(dy,2))
             if cont&lt;rangeR:
                 vrep.simxSetJointTargetPosition(clientID,joint1,dx,opmode)
-                print(dx,dy,dz)
+                print(round(dx*1000,1),round(dy*1000,1),round(dz*1000,1))
             else:
                 print("Out of range")
                 dx=dx-dt
@@ -201,7 +205,7 @@ if clientID != -1:
             cont=float(math.pow(dx,2)+math.pow(dy,2))
             if cont&lt;rangeR:
                 vrep.simxSetJointTargetPosition(clientID,joint1,dx,opmode)
-                print(dx,dy,dz)
+                print(round(dx*1000,1),round(dy*1000,1),round(dz*1000,1))
             else:
                 print("Out of range")
                 dx=dx+dt
@@ -210,7 +214,7 @@ if clientID != -1:
             cont=float(math.pow(dx,2)+math.pow(dy,2))
             if cont&lt;rangeR:
                 vrep.simxSetJointTargetPosition(clientID,joint2,dy,opmode)
-                print(dx,dy,dz)
+                print(round(dx*1000,1),round(dy*1000,1),round(dz*1000,1))
             else:
                 print("Out of range")
                 dy=dy-dt
@@ -219,7 +223,7 @@ if clientID != -1:
             cont=float(math.pow(dx,2)+math.pow(dy,2))
             if cont&lt;rangeR:
                 vrep.simxSetJointTargetPosition(clientID,joint2,dy,opmode)
-                print(dx,dy,dz)
+                print(round(dx*1000,1),round(dy*1000,1),round(dz*1000,1))
             else:
                 print("Out of range")
                 dy=dy+dt
@@ -227,7 +231,7 @@ if clientID != -1:
             dz=dz+dt   
             if dz&lt;max_h:       
                 vrep.simxSetJointTargetPosition(clientID,joint3,dz,opmode)
-                print(dx,dy,dz)
+                print(round(dx*1000,1),round(dy*1000,1),round(dz*1000,1))
             else:
                 print("too high")
                 dz=dz-dt 
@@ -238,12 +242,11 @@ if clientID != -1:
                 dz=0
             else:
                 vrep.simxSetJointTargetPosition(clientID,joint3,dz,opmode)
-                print(dx,dy,dz)
+                print(round(dx*1000,1),round(dy*1000,1),round(dz*1000,1))
     else:
         print ('Failed connecting to remote API server')
         print ('End')</pre>
-<p></p>
-<br />自動吹笛子機 << <a href='自動吹笛子機.html'>Previous</a> <a href='remoteAPI in C++.html'>Next</a> >> remoteAPI in C++</div>
+<p></p><br />自動吹笛子機 << <a href='自動吹笛子機.html'>Previous</a> <a href='remoteAPI in C++.html'>Next</a> >> remoteAPI in C++</div>
         
     <!-- footer -->
       <div class="container">

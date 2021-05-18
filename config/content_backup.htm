@@ -827,6 +827,7 @@ else:
 <p>C鍵往下</p>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/Ib3lePX2Pn0" width="560"></iframe></p>
 <p>程式參考</p>
+<p>5/18 程式修改:將顯示的數值由公尺轉成毫米並且去掉多餘的小數點</p>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import sim as vrep
 import math
 import random
@@ -877,7 +878,7 @@ if clientID != -1:
             cont=float(math.pow(dx,2)+math.pow(dy,2))
             if cont&lt;rangeR:
                 vrep.simxSetJointTargetPosition(clientID,joint1,dx,opmode)
-                print(dx,dy,dz)
+                print(round(dx*1000,1),round(dy*1000,1),round(dz*1000,1))
             else:
                 print("Out of range")
                 dx=dx-dt
@@ -886,7 +887,7 @@ if clientID != -1:
             cont=float(math.pow(dx,2)+math.pow(dy,2))
             if cont&lt;rangeR:
                 vrep.simxSetJointTargetPosition(clientID,joint1,dx,opmode)
-                print(dx,dy,dz)
+                print(round(dx*1000,1),round(dy*1000,1),round(dz*1000,1))
             else:
                 print("Out of range")
                 dx=dx+dt
@@ -895,7 +896,7 @@ if clientID != -1:
             cont=float(math.pow(dx,2)+math.pow(dy,2))
             if cont&lt;rangeR:
                 vrep.simxSetJointTargetPosition(clientID,joint2,dy,opmode)
-                print(dx,dy,dz)
+                print(round(dx*1000,1),round(dy*1000,1),round(dz*1000,1))
             else:
                 print("Out of range")
                 dy=dy-dt
@@ -904,7 +905,7 @@ if clientID != -1:
             cont=float(math.pow(dx,2)+math.pow(dy,2))
             if cont&lt;rangeR:
                 vrep.simxSetJointTargetPosition(clientID,joint2,dy,opmode)
-                print(dx,dy,dz)
+                print(round(dx*1000,1),round(dy*1000,1),round(dz*1000,1))
             else:
                 print("Out of range")
                 dy=dy+dt
@@ -912,7 +913,7 @@ if clientID != -1:
             dz=dz+dt   
             if dz&lt;max_h:       
                 vrep.simxSetJointTargetPosition(clientID,joint3,dz,opmode)
-                print(dx,dy,dz)
+                print(round(dx*1000,1),round(dy*1000,1),round(dz*1000,1))
             else:
                 print("too high")
                 dz=dz-dt 
@@ -923,12 +924,11 @@ if clientID != -1:
                 dz=0
             else:
                 vrep.simxSetJointTargetPosition(clientID,joint3,dz,opmode)
-                print(dx,dy,dz)
+                print(round(dx*1000,1),round(dy*1000,1),round(dz*1000,1))
     else:
         print ('Failed connecting to remote API server')
         print ('End')</pre>
-<p></p>
-<h2>remoteAPI in C++</h2>
+<p></p><h2>remoteAPI in C++</h2>
 <h3>0511</h3>
 <p>嘗試以C++最為remoteAPI控制的語言</p>
 <p>compiler為code block in Win10</p>
@@ -1358,8 +1358,7 @@ print(output)     #輸出</pre>
 <h3>第十一週</h3>
 <p></p>
 <h3>第十二週</h3>
-<p></p>
-<h2>討論</h2>
+<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/qWQwQH0Um7k" title="YouTube video player" width="560"></iframe></p><h2>討論</h2>
 <p>本小組的討論時間在組員的協調下，最終定為每個禮拜一的晚上11.。</p>
 <h3>discord</h3>
 <h3>第一次討論</h3>
