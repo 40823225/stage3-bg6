@@ -446,11 +446,69 @@ end</pre>
         
     end
 end</pre>
-<h3>3D列印機_自動繪製</h3>
+<p></p>
+<h3>3D列印機_控制噴嘴</h3>
+<p></p>
+<p>控制:</p>
+<p>上下左右控制噴頭的上下左右</p>
+<p>空白鍵往上</p>
+<p>C鍵往下</p>
+<p></p>
+<p></p>
+<p>圖檔下載</p>
+<p><a href="/downloads/3D print.ttt">3D print.ttt</a></p>
+<p></p>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/4jODRQz8fxY" width="560"></iframe></p>
+<p>程式參考</p>
+<pre class="brush:lua;auto-links:false;toolbar:false" contenteditable="false">function sysCall_init()
+    joint01=sim.getObjectHandle('X')
+    joint02=sim.getObjectHandle('Y')
+    joint03=sim.getObjectHandle('Z')
+    set=0
+    set1=0
+    set2=0
+    s=0.005
+end
+
+function sysCall_actuation()
+    -- put your actuation code here
+    message,auxiliaryData=sim.getSimulatorMessage()
+    while message~=-1 do
+        if (message==sim.message_keypress) then
+            if (auxiliaryData[1]==2009) then
+                set=set+s
+                sim.setJointTargetPosition(joint01,set)
+                print(sim.getJointPosition(joint01))
+            end
+            if (auxiliaryData[1]==2010) then
+                set=set-s
+                sim.setJointTargetPosition(joint01,set)
+            end
+            if (auxiliaryData[1]==2007) then
+               set1=set1+s
+               sim.setJointTargetPosition(joint02,set1)
+            end
+           if (auxiliaryData[1]==2008) then
+              set1=set1-s
+              sim.setJointTargetPosition(joint02,set1)
+            end
+            if (auxiliaryData[1]==32) then
+               set2=set2+s
+               sim.setJointTargetPosition(joint03,set2)
+            end
+           if (auxiliaryData[1]==99) then
+              set2=set2-s
+              sim.setJointTargetPosition(joint03,set2)
+            end
+        end
+    message,auxiliaryData=sim.getSimulatorMessage()
+    end
+end</pre>
+<p></p><h3>3D列印機_自動繪製</h3>
 <p>自動繪製正方體</p>
 <p><a href="/downloads/3D print AutoControl cube.ttt">3D print AutoControl cube.ttt</a></p>
 <p>自動繪製圓柱體</p>
-<p></p>
+<p><a href="/downloads/3D print AutoControl circle.ttt">3D print AutoControl circle.ttt</a></p>
 <p>自動繪製心臟線</p>
 <p><a href="/downloads/3D print AutoControl Cardioid.ttt">3D print AutoControl Cardioid.ttt</a></p>
 <p>參考影片</p>
@@ -556,6 +614,56 @@ end
 -- See the user manual or the available code snippets for additional callback functions and details
 </pre>
 <p>2. 圓柱體</p>
+<pre class="brush:lua;auto-links:false;toolbar:false" contenteditable="false">function sysCall_threadmain()
+    joint01=sim.getObjectHandle('X')
+    joint02=sim.getObjectHandle('Y')
+    joint03=sim.getObjectHandle('Z')
+    grap=sim.getObjectHandle('Graph')
+    set=0
+    set1=0
+    set2=0
+    s=0.01
+    step=1
+    r=0.005
+    rset=0.01
+    zz=0
+    zstep=1
+    dz=0.01
+    rstep=1
+    cubesize=10
+    t=0.01
+    angle=0
+    angleset=2
+    
+end
+
+function sysCall_cleanup()
+    while zstep&lt;=20 do
+        while rstep&lt;=5 do
+            while angle~=360 do
+                angle=angle+angleset
+                sim.setJointTargetPosition(joint01,r*(math.sin(angle*math.pi/180)))
+                sim.setJointTargetPosition(joint02,r*(math.cos(angle*math.pi/180)))
+                sim.wait(t)
+            end
+        rstep=rstep+1
+        angle=0
+        r=r+rset
+        print(rstep)
+        end
+    zz=zz+dz
+    zstep=zstep+1
+    sim.setJointTargetPosition(joint03,zz)
+    sim.setJointTargetPosition(joint01,0)
+    sim.setJointTargetPosition(joint02,0)
+    rstep=1
+    r=0.005
+    end
+    
+end
+
+-- See the user manual or the available code snippets for additional callback functions and details
+</pre>
 <p>3. 心臟線</p>
 <pre class="brush:lua;auto-links:false;toolbar:false" contenteditable="false">function sysCall_threadmain()
     joint01=sim.getObjectHandle('X')
@@ -607,6 +715,12 @@ end
 
 </pre>
 <p></p><h3>3D列印機_控制高度</h3>
+<p></p>
+<p>控制:</p>
+<p>上下左右控制噴頭的上下左右</p>
+<p>空白鍵往上</p>
+<p>C鍵往下</p>
+<p></p>
 <p></p>
 <p>圖檔下載</p>
 <p><a href="/downloads/3D print control altitude.ttt">3D print control altitude.ttt</a></p>
@@ -744,6 +858,8 @@ end
 <p></p>
 <h2>W13 Pick and Place</h2>
 <p></p>
+<p></p>
+<p>預計更新內容:將簡化程式碼</p>
 <p></p>
 <p>5/21 拍攝</p>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/YbOUjoNXhgI" width="560"></iframe></p>
@@ -2300,8 +2416,7 @@ function sysCall_sensing()
     end
 end 
 </pre>
-<p></p>
-<h2>尋找控制代碼</h2>
+<p></p><h2>尋找控制代碼</h2>
 <p>coppeliasim中</p>
 <p>simGetSimulatorMessage()為讀取鍵盤狀態的指令</p>
 <p>但是我們不知道指令是甚麼，所以寫了一段程式來檢測看每一個按鍵的指令是什麼</p>
