@@ -371,12 +371,12 @@ end
 </table>
 <p></p>
 <h2>架設場景</h2>
-<h3>0510對軸進行旋轉控制</h3>
+<h3>對軸進行旋轉控制</h3>
 <p>使用coppeliaSim 先叫出一個簡單的軸</p>
 <p>來進行模擬控制</p>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/9m9_lNlXvfA" width="560"></iframe></p>
 <p></p>
-<h3>0513對方快進行XYZ軸控制</h3>
+<h3>對方快進行XYZ軸控制</h3>
 <p></p>
 <p>建立方塊並且對其進行XYZ軸控制</p>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/d_3A25jRKEs" width="560"></iframe></p>
@@ -425,7 +425,7 @@ function sysCall_actuation()
     end
 end</pre>
 <p></p>
-<h3>0513物件螺旋運動</h3>
+<h3>物件螺旋運動</h3>
 <p>使用現成<span>腳本使方塊進行螺旋運動</span></p>
 <p><span><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/4_rgcQVmUs0" width="560"></iframe></span></p>
 <p>code</p>
@@ -446,7 +446,290 @@ end</pre>
         
     end
 end</pre>
-<h3>0510架設機械手臂場景</h3>
+<h3>3D列印機_自動繪製</h3>
+<p>自動繪製正方體</p>
+<p><a href="/downloads/3D print AutoControl cube.ttt">3D print AutoControl cube.ttt</a></p>
+<p>自動繪製圓柱體</p>
+<p></p>
+<p>自動繪製心臟線</p>
+<p><a href="/downloads/3D print AutoControl Cardioid.ttt">3D print AutoControl Cardioid.ttt</a></p>
+<p>參考影片</p>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/SJTnSvzHhiA" width="560"></iframe></p>
+<p>程式參考:</p>
+<p>1.正方體</p>
+<pre class="brush:lua;auto-links:false;toolbar:false" contenteditable="false">find_Position=function()
+XYZ={xp, yp, zz, step}
+end
+function sysCall_threadmain()
+    joint01=sim.getObjectHandle('X')
+    joint02=sim.getObjectHandle('Y')
+    joint03=sim.getObjectHandle('Z')
+    grap=sim.getObjectHandle('Graph')
+    set=0
+    set1=0
+    set2=0
+    s=0.01
+    step=1
+    xp=0
+    yp=0
+    zz=0
+    xstep=0
+    ystep=0
+    zstep=0
+    cubesize=10
+    t=1
+    
+    
+    while zstep&lt;=cubesize do
+        while step&lt;cubesize do --go++
+            while xstep&lt;=step do
+                xp=xp+s
+                sim.setJointTargetPosition(joint01,xp)
+                find_Position()
+                print(XYZ)
+                xstep=xstep+1
+                sim.wait(t)
+            end
+            while ystep&lt;=step do
+                yp=yp+s
+                sim.setJointTargetPosition(joint02,yp)
+                find_Position()
+                print(XYZ)
+                ystep=ystep+1
+                sim.wait(t)
+            end
+            --step=step+1
+            xstep=0
+            ystep=0    
+            while xstep&lt;=step do
+                xp=xp-s
+                sim.setJointTargetPosition(joint01,xp)
+                find_Position()
+                print(XYZ)
+                xstep=xstep+1
+                sim.wait(t)
+            end
+            while ystep&lt;=step do --go--
+                yp=yp-s
+                sim.setJointTargetPosition(joint02,yp)
+                find_Position()
+                print(XYZ)
+                ystep=ystep+1
+                sim.wait(t)
+            end
+            if step &lt; (cubesize-1) then
+                xp=xp-0.5*s
+                yp=yp-0.5*s
+                sim.setJointTargetPosition(joint01,xp)
+                sim.setJointTargetPosition(joint02,yp)
+                find_Position()
+                print(XYZ)
+            end
+            step=step+1
+            sim.wait(t)
+            xstep=0
+            ystep=0
+        end
+        step=1
+        zz=zz+s
+        sim.setJointTargetPosition(joint03,zz)
+        find_Position()
+        print(XYZ)
+        zstep=zstep+1
+        sim.wait(t)
+        xp=0
+        yp=0
+        sim.setJointTargetPosition(joint01,xp)
+        sim.setJointTargetPosition(joint02,yp)
+        find_Position()
+        print(XYZ)
+        sim.wait(t)
+    end
+    
+end
+
+function sysCall_cleanup()
+      
+    
+end
+
+-- See the user manual or the available code snippets for additional callback functions and details
+</pre>
+<p>2. 圓柱體</p>
+<p>3. 心臟線</p>
+<pre class="brush:lua;auto-links:false;toolbar:false" contenteditable="false">function sysCall_threadmain()
+    joint01=sim.getObjectHandle('X')
+    joint02=sim.getObjectHandle('Y')
+    joint03=sim.getObjectHandle('Z')
+    grap=sim.getObjectHandle('Graph')
+    set=0
+    set1=0
+    set2=0
+    s=0.01
+    step=1
+    r=0.005
+    rset=0.001
+    zz=0
+    zstep=1
+    dz=0.001
+    rstep=1
+    cubesize=10
+    t=0.5
+    angle=0
+    angleset=2
+    
+end
+
+function sysCall_cleanup()
+    while zstep&lt;=30 do
+        while rstep&lt;=30 do
+            while angle~=360 do
+                angle=angle+angleset
+                sim.setJointTargetPosition(joint01,2*r*((math.cos(angle*math.pi/180))-0.5*(math.cos(2*angle*math.pi/180))))
+                sim.setJointTargetPosition(joint02,2*r*((math.sin(angle*math.pi/180))-0.5*(math.sin(2*angle*math.pi/180))))
+                sim.wait(t)
+            end
+        rstep=rstep+1
+        angle=0
+        r=r+rset
+        print(rstep)
+        end
+    zz=zz+dz
+    zstep=zstep+1
+    sim.setJointTargetPosition(joint03,zz)
+    sim.setJointTargetPosition(joint01,0)
+    sim.setJointTargetPosition(joint02,0)
+    rstep=1
+    r=0.005
+    end
+    
+end
+
+</pre>
+<p></p><h3>3D列印機_控制高度</h3>
+<p></p>
+<p>圖檔下載</p>
+<p><a href="/downloads/3D print control altitude.ttt">3D print control altitude.ttt</a></p>
+<p></p>
+<p>影片參考</p>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/zPJSsqyDkfQ" width="560"></iframe></p>
+<p>程式參考:</p>
+<pre class="brush:lua;auto-links:false;toolbar:false" contenteditable="false">function sysCall_init()
+    -- do some initialization here
+    joint1=sim.getObjectHandle('P1')
+    joint2=sim.getObjectHandle('P2')
+    joint3=sim.getObjectHandle('P3')
+    xp=0
+    yp=0
+    zp=0
+    p1p=0
+    p2p=0
+    p3p=0
+    dz=0
+    step=0.01
+    --sim.getJointTargetPosition(joint1,p1p)
+    --sim.getJointTargetPosition(joint2,p2p)
+    --sim.getJointTargetPosition(joint3,p3p)
+    H=((0.290)^2-(0.1325)^2)^(1/2)
+    BaseX=0.1325*(math.cos(60*math.pi/180))
+    BaseY2=0.1325*(math.sin(60*math.pi/180))
+    BaseY3=0.1325*(math.sin(60*math.pi/180))
+end
+
+xyz = function()
+    bar1=(((0.290)^2-(0.1325-xp)^2-yp^2)^(1/2)-H+dz)
+    bar2=(((0.290)^2-BaseX^2-BaseY2^2)^(1/2)-H+dz)
+    bar3=(((0.290)^2-BaseX^2-BaseY3^2)^(1/2)-H+dz)
+end
+
+function sysCall_actuation()
+    -- put your actuation code here
+    message,auxiliaryData=sim.getSimulatorMessage()
+    while message~=-1 do
+        if (message==sim.message_keypress) then
+            if (auxiliaryData[1]==2010) then
+                xp=xp+step
+                BaseX=BaseX+step
+                xyz()
+                sim.setJointTargetPosition(joint1,bar1)
+                sim.setJointTargetPosition(joint2,bar2)
+                sim.setJointTargetPosition(joint3,bar3)
+            end
+            if (auxiliaryData[1]==2009) then
+                xp=xp-step
+                BaseX=BaseX-step
+                xyz()
+                sim.setJointTargetPosition(joint1,bar1)
+                sim.setJointTargetPosition(joint2,bar2)
+                sim.setJointTargetPosition(joint3,bar3)
+            end
+            if (auxiliaryData[1]==2007) then
+                yp=yp+step
+                BaseY2=BaseY2-step
+                BaseY3=BaseY3+step
+                xyz()
+                sim.setJointTargetPosition(joint1,bar1)
+                sim.setJointTargetPosition(joint2,bar2)
+                sim.setJointTargetPosition(joint3,bar3)
+            end
+            if (auxiliaryData[1]==2008) then
+                yp=yp-step
+                BaseY2=BaseY2+step
+                BaseY3=BaseY3-step
+                xyz()
+                sim.setJointTargetPosition(joint1,bar1)
+                sim.setJointTargetPosition(joint2,bar2)
+                sim.setJointTargetPosition(joint3,bar3)
+            end
+            if (auxiliaryData[1]==32) then
+                sim.getJointTargetPosition(joint1,p1p)
+                sim.getJointTargetPosition(joint2,p2p)
+                sim.getJointTargetPosition(joint3,p3p)
+                p1p=p1p+dz
+                p2p=p2p+dz
+                p3p=p3p+dz
+                dz=dz+step
+                printf(p1p)
+                xyz()
+                print(p2p)
+                sim.setJointTargetPosition(joint1,bar1+dz)
+                sim.setJointTargetPosition(joint2,bar2+dz)
+                sim.setJointTargetPosition(joint3,bar3+dz)
+                H=H-dz
+            end
+            if (auxiliaryData[1]==99) then
+                sim.getJointTargetPosition(joint1,p1p)
+                sim.getJointTargetPosition(joint2,p2p)
+                sim.getJointTargetPosition(joint3,p3p)
+                p1p=p1p-dz
+                p2p=p2p-dz
+                p3p=p3p-dz
+                dz=dz-step
+                printf(p1p)
+                xyz()
+                print(p2p)
+                sim.setJointTargetPosition(joint1,bar1-dz)
+                sim.setJointTargetPosition(joint2,bar2-dz)
+                sim.setJointTargetPosition(joint3,bar3-dz)
+                H=H-dz
+            end
+         end
+message,auxiliaryData=sim.getSimulatorMessage()
+end
+    
+end
+
+function sysCall_sensing()
+    -- put your sensing code here
+end
+
+function sysCall_cleanup()
+    -- do some clean-up here
+end
+
+-- See the user manual or the available code snippets for additional callback functions and details
+</pre>
+<p></p><h3>架設機械手臂場景</h3>
 <p>將所有物件控制後直接進行模擬，檢測是否有異樣</p>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/rUZ-taH8l-4" width="560"></iframe></p>
 <h3>機械手臂場景微調</h3>
@@ -2017,9 +2300,6 @@ function sysCall_sensing()
     end
 end 
 </pre>
-<p></p><h3>機械手臂場景路徑控制</h3>
-<p>可以透過程式來進行路徑的預先規劃</p>
-<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/ClpcrK5-4IQ" width="560"></iframe></p>
 <p></p>
 <h2>尋找控制代碼</h2>
 <p>coppeliasim中</p>
