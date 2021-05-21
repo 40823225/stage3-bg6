@@ -358,8 +358,8 @@ end
 <td style="width: 71px; height: 28px; text-align: center;">105</td>
 <td style="width: 34px; height: 28px; text-align: center;"><strong>r</strong></td>
 <td style="width: 69px; height: 28px; text-align: center;">114</td>
-<td style="width: 45px; height: 28px; text-align: center;"></td>
-<td style="width: 64px; height: 28px; text-align: center;"></td>
+<td style="width: 45px; height: 28px; text-align: center;">空白鍵</td>
+<td style="width: 64px; height: 28px; text-align: center;">32</td>
 <td style="width: 50px; height: 28px; text-align: center;"><strong>8</strong></td>
 <td style="width: 71px; height: 28px; text-align: center;">56</td>
 <td style="width: 42px; height: 28px; text-align: center;"><strong>,</strong></td>
@@ -369,8 +369,7 @@ end
 </tr>
 </tbody>
 </table>
-<p></p>
-<h2>架設場景</h2>
+<p></p><h2>架設場景</h2>
 <h3>對軸進行旋轉控制</h3>
 <p>使用coppeliaSim 先叫出一個簡單的軸</p>
 <p>來進行模擬控制</p>
@@ -831,6 +830,69 @@ function sysCall_actuation()
 message,auxiliaryData=sim.getSimulatorMessage()
 end
     
+end
+
+function sysCall_sensing()
+    -- put your sensing code here
+end
+
+function sysCall_cleanup()
+    -- do some clean-up here
+end
+
+-- See the user manual or the available code snippets for additional callback functions and details
+</pre>
+<p></p>
+<p></p>
+<h3>衝擊試驗機</h3>
+<p>控制說明</p>
+<p>請依序按下1~4</p>
+<p>分別為上升、落下、往下、接合</p>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/EJ-4jpUNIoc" width="560"></iframe></p>
+<p></p>
+<p>程式碼參考</p>
+<pre class="brush:lua;auto-links:false;toolbar:false" contenteditable="false">function sysCall_init()
+    -- do some initialization here
+    jointY=sim.getObjectHandle('Prismatic_joint')
+    joint1=sim.getObjectHandle('Prismatic_joint0')
+    joint2=sim.getObjectHandle('Prismatic_joint1')
+    cont=1
+end
+
+function sysCall_actuation()
+    -- put your actuation code here
+    message,auxiliaryData=sim.getSimulatorMessage()
+    while message~=-1 do
+        if (message==sim.message_keypress) then
+            if (auxiliaryData[1]==49) then
+                if (cont==1) then
+                    sim.setJointTargetPosition(jointY,40)
+                    cont=2
+                end
+            end
+            if (auxiliaryData[1]==50) then
+                if (cont==2) then
+                    sim.setJointTargetPosition(joint1,0.1)
+                    sim.setJointTargetPosition(joint2,-0.1)
+                    cont=3
+                end
+            end
+            if (auxiliaryData[1]==51) then
+                if (cont==3) then
+                    sim.setJointTargetPosition(jointY,0)
+                    cont=4
+                end
+            end
+            if (auxiliaryData[1]==52) then
+                if (cont==4) then
+                    sim.setJointTargetPosition(joint1,0)
+                    sim.setJointTargetPosition(joint2,0)
+                    cont=1
+                end
+            end
+         end
+    message,auxiliaryData=sim.getSimulatorMessage()
+    end
 end
 
 function sysCall_sensing()
@@ -2449,7 +2511,7 @@ end</pre>
 <p>小鍵盤0 控制小臂是否與大臂連動</p>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/8Od8iPu0vRI" width="560"></iframe></p>
 <p></p>
-<h2>0513 Lua 新增夾爪控制</h2>
+<h2>0513 機械手臂新增夾爪控制</h2>
 <p></p>
 <p>新增一夾爪與兩個攝影機</p>
 <p>夾爪可以夾取物品，攝影機可以方便對正要夾取的物品</p>
@@ -2457,8 +2519,7 @@ end</pre>
 <p><a href="/downloads/機械手臂/Camera contral.ttt">Camera contral.ttt</a></p>
 <p>參考影片</p>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/E8EAB7ePr_Y" width="560"></iframe></p>
-<p></p>
-<h2>0511 Programming in C++</h2>
+<p></p><h2>0511 Programming in C++</h2>
 <p>圖檔:</p>
 <p><a href="/downloads/機械手臂/programmingl in C++ Unclear.ttt">programmingl in C++ Unclear.ttt</a></p>
 <p>簡介:</p>
