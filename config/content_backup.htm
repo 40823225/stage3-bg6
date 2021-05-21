@@ -845,7 +845,67 @@ end
 <p></p>
 <p></p>
 <h3>衝擊試驗機</h3>
-<p>..,,..,</p><h3>架設機械手臂場景</h3>
+<p>控制說明</p>
+<p>請依序按下1~4</p>
+<p>分別為上升、落下、往下、接合</p>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/EJ-4jpUNIoc" width="560"></iframe></p>
+<p></p>
+<p>程式碼參考</p>
+<pre class="brush:lua;auto-links:false;toolbar:false" contenteditable="false">function sysCall_init()
+    -- do some initialization here
+    jointY=sim.getObjectHandle('Prismatic_joint')
+    joint1=sim.getObjectHandle('Prismatic_joint0')
+    joint2=sim.getObjectHandle('Prismatic_joint1')
+    cont=1
+end
+
+function sysCall_actuation()
+    -- put your actuation code here
+    message,auxiliaryData=sim.getSimulatorMessage()
+    while message~=-1 do
+        if (message==sim.message_keypress) then
+            if (auxiliaryData[1]==49) then
+                if (cont==1) then
+                    sim.setJointTargetPosition(jointY,40)
+                    cont=2
+                end
+            end
+            if (auxiliaryData[1]==50) then
+                if (cont==2) then
+                    sim.setJointTargetPosition(joint1,0.1)
+                    sim.setJointTargetPosition(joint2,-0.1)
+                    cont=3
+                end
+            end
+            if (auxiliaryData[1]==51) then
+                if (cont==3) then
+                    sim.setJointTargetPosition(jointY,0)
+                    cont=4
+                end
+            end
+            if (auxiliaryData[1]==52) then
+                if (cont==4) then
+                    sim.setJointTargetPosition(joint1,0)
+                    sim.setJointTargetPosition(joint2,0)
+                    cont=1
+                end
+            end
+         end
+    message,auxiliaryData=sim.getSimulatorMessage()
+    end
+end
+
+function sysCall_sensing()
+    -- put your sensing code here
+end
+
+function sysCall_cleanup()
+    -- do some clean-up here
+end
+
+-- See the user manual or the available code snippets for additional callback functions and details
+</pre>
+<p></p><h3>架設機械手臂場景</h3>
 <p>將所有物件控制後直接進行模擬，檢測是否有異樣</p>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/rUZ-taH8l-4" width="560"></iframe></p>
 <h3>機械手臂場景微調</h3>
