@@ -928,7 +928,7 @@ end
 <p>影片:</p>
 <p>影片模擬時間為30分鐘，總共進行4次將球放到空盤再回復，理論上可以無限反覆模擬</p>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/OeSr68lxeSU" width="560"></iframe></p>
-<p><strong></strong>之前在舊版本中，會發現吸盤一直朝同一方向旋轉角度會誤差越來越大，所以在此場景中，將吸取設為正轉，放下涉違反轉，即可以避免朝同一方向選轉造成的角度偏移問題</p>
+<p><strong></strong>之前在舊版本中，會發現吸盤一直朝同一方向旋轉角度會誤差越來越大，所以在此場景中，將吸取設為正轉，放下設成反轉，即可以避免朝同一方向選轉造成的角度偏移問題</p>
 <p><strong>程式構想:</strong></p>
 <p>透過計算現在為拿取第幾個球，可以推算出該球在第幾層(unit)，也可以定為該層的起始座標(角落)</p>
 <p>知道在第幾層後可以反推出他是該層的第幾個(finding_XY)，進一步知道他的XY座標(X_Pos/Y_Pos)</p>
@@ -1079,8 +1079,7 @@ function sysCall_threadmain()
         end
     end
 end</pre>
-<p></p>
-<h3>舊版本</h3>
+<p></p><h3>舊版本</h3>
 <p>預計更新內容:將簡化程式碼</p>
 <p>圖檔:</p>
 <p><a href="/downloads/W13 Pick and Place.ttt">W13 Pick and Place.ttt</a></p>
