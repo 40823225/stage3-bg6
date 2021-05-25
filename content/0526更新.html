@@ -146,7 +146,7 @@ img.add_border {
 <p>透過計算現在為拿取第幾個球，可以推算出該球在第幾層(unit)，也可以定為該層的起始座標(角落)</p>
 <p>知道在第幾層後可以反推出他是該層的第幾個(finding_XY)，進一步知道他的XY座標(X_Pos/Y_Pos)</p>
 <p>例: 第九顆球，可以得知在第三層，反推可以得知她是第4個，然後就可以得知她是第二排第一個，以此類推</p>
-<p></p>
+<p>而在第30顆球過後，需要重新設定基準座標還有重設數量，才有最下面if問句</p>
 <p><strong>程式參考</strong></p>
 <pre class="brush:lua;auto-links:false;toolbar:false" contenteditable="false">function signal_switch(singal,enable)
     modelBase1=sim.getObjectAssociatedWithScript(sim.handle_self)
