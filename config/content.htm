@@ -922,10 +922,11 @@ end
 <p></p>
 <h2>W13 Pick and Place</h2>
 <p></p>
-<p><a href="http://mde.tw/cd2021/content/W13.html">課程要求</a></p><h3>0526更新</h3>
+<p><a href="http://mde.tw/cd2021/content/W13.html">課程要求</a></p>
+<h3>0526更新</h3>
 <p>預計更新-remoteApi</p>
 <p>檔案下載</p>
-<p><a href="/downloads/W13_Pick_and_Place.rar">W13_Pick_and_Place.rar</a></p>
+<p><a href="/downloads/W13_40823214">W13_pick and place</a></p>
 <p>影片:</p>
 <p>影片模擬時間為30分鐘，總共進行4次將球放到空盤再回復，理論上可以無限反覆模擬</p>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/OeSr68lxeSU" width="560"></iframe></p>
@@ -937,18 +938,6 @@ end
 <p>而在第30顆球過後，需要重新設定基準座標還有重設數量，才有最下面if問句</p>
 <p><strong>程式參考</strong></p>
 <pre class="brush:lua;auto-links:false;toolbar:false" contenteditable="false">function signal_switch(singal,enable)
-    modelBase1=sim.getObjectAssociatedWithScript(sim.handle_self)
-    modelBase2=sim.getObjectAssociatedWithScript(sim.handle_self)
-    modelBase3=sim.getObjectAssociatedWithScript(sim.handle_self)
-    modelBase4=sim.getObjectAssociatedWithScript(sim.handle_self)
-    modelBase5=sim.getObjectAssociatedWithScript(sim.handle_self)
-    modelBase6=sim.getObjectAssociatedWithScript(sim.handle_self)
-    modelName1=sim.getObjectName(modelBase1)
-    modelName2=sim.getObjectName(modelBase2)
-    modelName3=sim.getObjectName(modelBase3)
-    modelName4=sim.getObjectName(modelBase4)
-    modelName5=sim.getObjectName(modelBase5)
-    modelName6=sim.getObjectName(modelBase6)
     if singal==1 or singal==12 then
         sim.setIntegerSignal(modelName1 .."call_1",enable)
     end
@@ -1080,7 +1069,8 @@ function sysCall_threadmain()
         end
     end
 end</pre>
-<p></p><h3>舊版本</h3>
+<p></p>
+<h3>舊版本</h3>
 <p>預計更新內容:將簡化程式碼</p>
 <p>圖檔:</p>
 <p><a href="/downloads/W13 Pick and Place.ttt">W13 Pick and Place.ttt</a></p>
@@ -3131,6 +3121,11 @@ if clientID != -1:
     else:
         print ('Failed connecting to remote API server')
         print ('End')</pre>
+<p></p>
+<h2>W13 remoteApi</h2>
+<p>圖檔</p>
+<p><a href="/downloads/W13_40823214">W13 Pick and Place</a></p>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/L9Q6STVJBw0" width="560"></iframe></p>
 <p></p>
 <h2>remoteAPI in C++</h2>
 <h3>0511</h3>
