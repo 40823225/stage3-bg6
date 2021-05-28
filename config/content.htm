@@ -2859,7 +2859,22 @@ print ('End')
 <p style="padding-left: 60px;"><a href="https://github.com/mdecourse/robocomp">https://github.com/mdecourse/robocomp</a></p>
 <p style="padding-left: 60px;">Code to connect RocoComp to V-REP</p>
 <p style="padding-left: 90px;"><a href="https://github.com/mdecourse/V-REP-component">https://github.com/mdecourse/V-REP-component</a></p>
-<h2>自動吹笛子機</h2>
+<h2>機械手臂多人對戰</h2>
+<p>圖檔下載</p>
+<p><a href="/downloads/robot arm fight">robot arm fight</a></p>
+<p>場景設定:</p>
+<p>需到根目錄之<span>remoteApiConnections.txt在最下方新增以下文字</span></p>
+<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">portIndex2_port             = 19998
+portIndex2_debug            = false
+portIndex2_syncSimTrigger   = true</pre>
+<p>然後需要打開cmd 輸入ipconfig 查看ipv4位置</p>
+<p>再打開兩個主控程式將ipv4位置填入</p>
+<p>示範影片</p>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/I0R_q5HuuOU" width="560"></iframe></p>
+<p></p>
+<p>構想來源</p>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/cR-YlZ9NdIA" width="560"></iframe></p>
+<p></p><h2>自動吹笛子機</h2>
 <p>Stage1-bg6 自動吹笛子機remoteApi</p>
 <p>控制:</p>
 <p>f,d,s,j,k,l 分別控制六根不同的桿子往下</p>
@@ -3012,8 +3027,7 @@ else:
     print ('Failed connecting to remote API server')
     print ('End')</pre>
 <p></p>
-<p></p>
-<h2>3D列印機</h2>
+<p></p><h2>3D列印機</h2>
 <p>使用python remoteApi進行遠端控制</p>
 <p>控制:</p>
 <p>上下左右控制噴頭的上下左右</p>
