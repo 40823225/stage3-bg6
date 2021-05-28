@@ -2,7 +2,7 @@
         <head>
         <title>Stage3-bg6</title>
         <meta charset="utf-8">
-<meta property="head" content="H3">
+<meta property="head" content="H2">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700,900" rel="stylesheet">
         <link rel="stylesheet" href="./../cmsimde/static/chimper/fonts/icomoon/style.css">
@@ -134,138 +134,9 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">3D列印機_自動繪製 << <a href='3D列印機_自動繪製.html'>Previous</a> <a href='衝擊試驗機.html'>Next</a> >> 衝擊試驗機<br /><h1>3D列印機_控制高度</h1>
-<p></p>
-<p>控制:</p>
-<p>上下左右控制噴頭的上下左右</p>
-<p>空白鍵往上</p>
-<p>C鍵往下</p>
-<p></p>
-<p></p>
-<p>圖檔下載</p>
-<p><a href="./../downloads/3D print control altitude.ttt">3D print control altitude.ttt</a></p>
-<p></p>
-<p>影片參考</p>
-<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/zPJSsqyDkfQ" width="560"></iframe></p>
-<p>程式參考:</p>
-<pre class="brush:lua;auto-links:false;toolbar:false" contenteditable="false">function sysCall_init()
-    -- do some initialization here
-    joint1=sim.getObjectHandle('P1')
-    joint2=sim.getObjectHandle('P2')
-    joint3=sim.getObjectHandle('P3')
-    xp=0
-    yp=0
-    zp=0
-    p1p=0
-    p2p=0
-    p3p=0
-    dz=0
-    step=0.01
-    --sim.getJointTargetPosition(joint1,p1p)
-    --sim.getJointTargetPosition(joint2,p2p)
-    --sim.getJointTargetPosition(joint3,p3p)
-    H=((0.290)^2-(0.1325)^2)^(1/2)
-    BaseX=0.1325*(math.cos(60*math.pi/180))
-    BaseY2=0.1325*(math.sin(60*math.pi/180))
-    BaseY3=0.1325*(math.sin(60*math.pi/180))
-end
-
-xyz = function()
-    bar1=(((0.290)^2-(0.1325-xp)^2-yp^2)^(1/2)-H+dz)
-    bar2=(((0.290)^2-BaseX^2-BaseY2^2)^(1/2)-H+dz)
-    bar3=(((0.290)^2-BaseX^2-BaseY3^2)^(1/2)-H+dz)
-end
-
-function sysCall_actuation()
-    -- put your actuation code here
-    message,auxiliaryData=sim.getSimulatorMessage()
-    while message~=-1 do
-        if (message==sim.message_keypress) then
-            if (auxiliaryData[1]==2010) then
-                xp=xp+step
-                BaseX=BaseX+step
-                xyz()
-                sim.setJointTargetPosition(joint1,bar1)
-                sim.setJointTargetPosition(joint2,bar2)
-                sim.setJointTargetPosition(joint3,bar3)
-            end
-            if (auxiliaryData[1]==2009) then
-                xp=xp-step
-                BaseX=BaseX-step
-                xyz()
-                sim.setJointTargetPosition(joint1,bar1)
-                sim.setJointTargetPosition(joint2,bar2)
-                sim.setJointTargetPosition(joint3,bar3)
-            end
-            if (auxiliaryData[1]==2007) then
-                yp=yp+step
-                BaseY2=BaseY2-step
-                BaseY3=BaseY3+step
-                xyz()
-                sim.setJointTargetPosition(joint1,bar1)
-                sim.setJointTargetPosition(joint2,bar2)
-                sim.setJointTargetPosition(joint3,bar3)
-            end
-            if (auxiliaryData[1]==2008) then
-                yp=yp-step
-                BaseY2=BaseY2+step
-                BaseY3=BaseY3-step
-                xyz()
-                sim.setJointTargetPosition(joint1,bar1)
-                sim.setJointTargetPosition(joint2,bar2)
-                sim.setJointTargetPosition(joint3,bar3)
-            end
-            if (auxiliaryData[1]==32) then
-                sim.getJointTargetPosition(joint1,p1p)
-                sim.getJointTargetPosition(joint2,p2p)
-                sim.getJointTargetPosition(joint3,p3p)
-                p1p=p1p+dz
-                p2p=p2p+dz
-                p3p=p3p+dz
-                dz=dz+step
-                printf(p1p)
-                xyz()
-                print(p2p)
-                sim.setJointTargetPosition(joint1,bar1+dz)
-                sim.setJointTargetPosition(joint2,bar2+dz)
-                sim.setJointTargetPosition(joint3,bar3+dz)
-                H=H-dz
-            end
-            if (auxiliaryData[1]==99) then
-                sim.getJointTargetPosition(joint1,p1p)
-                sim.getJointTargetPosition(joint2,p2p)
-                sim.getJointTargetPosition(joint3,p3p)
-                p1p=p1p-dz
-                p2p=p2p-dz
-                p3p=p3p-dz
-                dz=dz-step
-                printf(p1p)
-                xyz()
-                print(p2p)
-                sim.setJointTargetPosition(joint1,bar1-dz)
-                sim.setJointTargetPosition(joint2,bar2-dz)
-                sim.setJointTargetPosition(joint3,bar3-dz)
-                H=H-dz
-            end
-         end
-message,auxiliaryData=sim.getSimulatorMessage()
-end
-    
-end
-
-function sysCall_sensing()
-    -- put your sensing code here
-end
-
-function sysCall_cleanup()
-    -- do some clean-up here
-end
-
--- See the user manual or the available code snippets for additional callback functions and details
-</pre>
-<p></p>
-<p></p>
-<br />3D列印機_自動繪製 << <a href='3D列印機_自動繪製.html'>Previous</a> <a href='衝擊試驗機.html'>Next</a> >> 衝擊試驗機</div>
+    <div id="tipue_search_content">倉儲帳號被鎖 << <a href='倉儲帳號被鎖.html'>Previous</a> <a href='第11周.html'>Next</a> >> 第11周<br /><h1>小組直播影片</h1>
+<p>這邊放的是每週老師說要直播的影片</p>
+<br />倉儲帳號被鎖 << <a href='倉儲帳號被鎖.html'>Previous</a> <a href='第11周.html'>Next</a> >> 第11周</div>
         
     <!-- footer -->
       <div class="container">
