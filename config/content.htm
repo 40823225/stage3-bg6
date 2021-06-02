@@ -8,7 +8,7 @@
 <p><a href="https://github.com/40823238/cd2021">40823238</a><a href="https://40823238.github.io/cd2021/content/index.html">/40823238</a> <span>吳容輝</span></p>
 <p><a href="https://github.com/40823247/cd2021">40823247</a><a href="https://40823247.github.io/cd2021/content/index.html">/40823247</a> <span>許力右</span></p>
 <p><a href="https://github.com/40823248/cd2021">40823248</a><a href="https://40823248.github.io/cd2021/content/index.html">/40823248</a> <span>劉彥廷</span></p>
-<p><span></span></p>
+<p><span></span>test</p>
 <h1>機械手臂</h1>
 <p>原本我們的主題，是在我們原本在stage2-bg6所做的腳踏車衝擊測試機跟機械手臂在做選擇，但考慮到<span>腳踏車衝擊測試機的零件數過多及他所會遇到的力學相關的問題，所以我們最後討論出來的結果是，將主題訂為機械手臂。</span></p>
 <h2>繪圖成果</h2>
@@ -922,7 +922,160 @@ end
 <p></p>
 <h2>W13 Pick and Place</h2>
 <p></p>
+<p><a href="http://mde.tw/cd2021/content/W13.html">課程要求</a></p>
 <p></p>
+<h3>remoteApi</h3>
+<p></p>
+<p>請見task2-remoteApi-&gt;W13 remoteApi</p>
+<p><a href="https://40823225.github.io/stage3-bg6/content/W13%C2%A0remoteApi.html">傳送門</a></p>
+<h3>0526更新</h3>
+<p>預計更新-remoteApi</p>
+<p>檔案下載</p>
+<p><a href="/downloads/W13_40823214">W13_pick and place</a></p>
+<p>影片:</p>
+<p>影片模擬時間為30分鐘，總共進行4次將球放到空盤再回復，理論上可以無限反覆模擬</p>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/OeSr68lxeSU" width="560"></iframe></p>
+<p><strong></strong>之前在舊版本中，會發現吸盤一直朝同一方向旋轉角度會誤差越來越大，所以在此場景中，將吸取設為正轉，放下設成反轉，即可以避免朝同一方向選轉造成的角度偏移問題</p>
+<p><strong>程式構想:</strong></p>
+<p>透過計算現在為拿取第幾個球，可以推算出該球在第幾層(unit)，也可以定為該層的起始座標(角落)</p>
+<p>知道在第幾層後可以反推出他是該層的第幾個(finding_XY)，進一步知道他的XY座標(X_Pos/Y_Pos)</p>
+<p>例: 第九顆球，可以得知在第三層，反推可以得知她是第4個，然後就可以得知她是第二排第一個，以此類推</p>
+<p>而在第30顆球過後，需要重新設定基準座標還有重設數量，才有最下面if問句</p>
+<p><strong>程式參考</strong></p>
+<pre class="brush:lua;auto-links:false;toolbar:false" contenteditable="false">function signal_switch(singal,enable)
+    if singal==1 or singal==12 then
+        sim.setIntegerSignal(modelName1 .."call_1",enable)
+    end
+    if singal==2 or singal==11 then
+        sim.setIntegerSignal(modelName2 .."call_2",enable)
+    end
+    if singal==3 or singal==10 then
+        sim.setIntegerSignal(modelName3 .."call_3",enable)
+    end
+    if singal==4 or singal==9 then
+        sim.setIntegerSignal(modelName4 .."call_4",enable)
+    end
+    if singal==5 or singal==8 then
+        sim.setIntegerSignal(modelName5 .."call_5",enable)
+    end
+    if singal==6 or singal==7 then
+        sim.setIntegerSignal(modelName6 .."call_6",enable)
+    end
+end
+
+function sysCall_threadmain()
+    joint01=sim.getObjectHandle('X')
+    joint02=sim.getObjectHandle('Y')
+    joint03=sim.getObjectHandle('Z')
+    jointr=sim.getObjectHandle('Rotate')
+    tt=1
+    long_t=1.5
+    long_long_t=3 --time set
+    rotate_deg=0 --pad rotate
+    atz=0  --altitude set
+    setx=0.5
+    setpx=-0.5 --center pick set
+    sety=-0.16
+    setpy=-0.16 --center fall set
+    local pick_high={"0.0645","0.134","0.2025","0.2768"} --pick up high set
+    local fall_high={"0.05","0.12","0.18","0.26"} --fall high set
+    local high_up={"0","0","0.05","0.12"}
+    cube=1              -- set cube
+    ball_pick_time=0    --total ball we pick
+    ball_put_time=31     --total ball we put
+    while (ball_pick_time&lt;60) do
+        for ball=1,6,1 do    --pick the ball
+            ball_pick_time=ball_pick_time+1 --total time we pick
+            i=1
+            unit=0
+            level=0
+            while level &lt; ball_pick_time do  --find which level and place should be of the xy coordinates
+                unit=unit+1
+                level=level+unit^2
+            end
+            finding_XY=ball_pick_time   --this is the XY on that floor
+            while(i&lt;=unit-1) do            
+                finding_XY=finding_XY-(i^2) 
+                i=i+1
+            end
+            X_Pos=finding_XY%unit       -- the X and Y coordinates(by balls)
+             if X_Pos==0 then
+                X_Pos=unit
+            end
+            Y_Pos=(math.ceil(finding_XY/unit)) 
+            BaseX=setx-((unit-1)*0.05)--now we need to find the 0 of the xy
+            BaseY=sety-((unit-1)*0.05)
+            sim.setJointTargetPosition(joint01,BaseX+(0.1*(X_Pos-1))) --move to Position
+            sim.wait(tt)
+            sim.setJointTargetPosition(joint02,BaseY+(0.1*(Y_Pos-1)))
+            sim.wait(tt)
+            signal_switch(ball,1) --switch pad on
+            sim.setJointTargetPosition(joint03,-pick_high[unit])--pick the pall
+            sim.wait(tt)
+            sim.setJointTargetPosition(joint03,atz-high_up[unit]) --after pick up we dont need to go that high
+            sim.wait(tt)
+            rotate_deg=rotate_deg+60  --rotate the pad
+            sim.setJointTargetPosition(jointr,rotate_deg*math.pi/180)
+            sim.wait(tt)
+            sim.wait(tt)
+        end
+        sim.wait(long_t)
+        sim.setJointTargetPosition(joint01,0)
+        sim.setJointTargetPosition(joint02,0)
+        sim.setJointTargetPosition(joint03,0)
+        sim.wait(long_t)
+        for ball=1,6,1 do --put the ball
+            ball_put_time=ball_put_time-1
+            i=1
+            unit=0
+            level=0
+            while level &lt; ball_put_time do  --find which level and place should be of the xy coordinates
+                unit=unit+1
+                level=level+unit^2
+            end
+            finding_XY=ball_put_time   --this is the XY on that floor
+            while(i&lt;=unit-1) do            
+                finding_XY=finding_XY-(i^2) 
+                i=i+1
+            end
+            X_Pos=finding_XY%unit       -- the X and Y coordinates(by balls)
+             if X_Pos==0 then
+                X_Pos=unit
+            end
+            Y_Pos=(math.ceil(finding_XY/unit)) 
+            BaseX=setpx-((unit-1)*0.05)--now we need to find the 0 of the xy
+            BaseY=setpy-((unit-1)*0.05)
+            rotate_deg=rotate_deg-60  --rotate the pad
+            sim.setJointTargetPosition(jointr,rotate_deg*math.pi/180)
+            sim.wait(tt)
+            sim.setJointTargetPosition(joint01,BaseX+(0.1*(X_Pos-1))) --move to Position
+            sim.wait(tt)
+            sim.setJointTargetPosition(joint02,BaseY+(0.1*(Y_Pos-1)))
+            sim.wait(tt)
+            sim.setJointTargetPosition(joint03,-fall_high[unit])--pick the pall
+            sim.wait(tt)
+            signal_switch(ball+6,0) --switch pad off
+            sim.wait(tt)
+            sim.setJointTargetPosition(joint03,atz-high_up[unit]) --after pick up we dont need to go that high
+            sim.wait(tt)
+            sim.wait(tt)
+        end
+        sim.wait(long_t)
+        sim.setJointTargetPosition(joint01,0)
+        sim.setJointTargetPosition(joint02,0)
+        sim.setJointTargetPosition(joint03,0)
+        sim.wait(long_t)
+        if ball_pick_time==30 then
+            pick_high={"0.07","0.138","0.2085","0.28"}
+            setx=-setx
+            setpx=-setpx
+            ball_pick_time=0
+            ball_put_time=31
+        end
+    end
+end</pre>
+<p></p>
+<h3>舊版本</h3>
 <p>預計更新內容:將簡化程式碼</p>
 <p>圖檔:</p>
 <p><a href="/downloads/W13 Pick and Place.ttt">W13 Pick and Place.ttt</a></p>
@@ -2707,6 +2860,22 @@ print ('End')
 <p style="padding-left: 60px;"><a href="https://github.com/mdecourse/robocomp">https://github.com/mdecourse/robocomp</a></p>
 <p style="padding-left: 60px;">Code to connect RocoComp to V-REP</p>
 <p style="padding-left: 90px;"><a href="https://github.com/mdecourse/V-REP-component">https://github.com/mdecourse/V-REP-component</a></p>
+<h2>機械手臂多人對戰</h2>
+<p>圖檔下載</p>
+<p><a href="/downloads/robot arm fight">robot arm fight</a></p>
+<p>場景設定:</p>
+<p>需到根目錄之<span>remoteApiConnections.txt在最下方新增以下文字</span></p>
+<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">portIndex2_port             = 19998
+portIndex2_debug            = false
+portIndex2_syncSimTrigger   = true</pre>
+<p>然後需要打開cmd 輸入ipconfig 查看ipv4位置</p>
+<p>再打開兩個主控程式將ipv4位置填入</p>
+<p>示範影片</p>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/I0R_q5HuuOU" width="560"></iframe></p>
+<p></p>
+<p>構想來源</p>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/cR-YlZ9NdIA" width="560"></iframe></p>
+<p></p>
 <h2>自動吹笛子機</h2>
 <p>Stage1-bg6 自動吹笛子機remoteApi</p>
 <p>控制:</p>
@@ -2973,6 +3142,14 @@ if clientID != -1:
     else:
         print ('Failed connecting to remote API server')
         print ('End')</pre>
+<p></p>
+<h2>W13 Pick and Place remoteApi</h2>
+<h3>0601</h3>
+<p>檔案待整理上傳<iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/lgBP-Mw2nIY" width="560"></iframe></p>
+<h3>0524</h3>
+<p>圖檔</p>
+<p><a href="/downloads/W13_40823214">W13 Pick and Place</a></p>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/L9Q6STVJBw0" width="560"></iframe></p>
 <p></p>
 <h2>remoteAPI in C++</h2>
 <h3>0511</h3>
@@ -3405,6 +3582,8 @@ print(output)     #輸出</pre>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/Hv8lykwq480" width="560"></iframe></p>
 <h3>第十二週</h3>
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/qWQwQH0Um7k" title="YouTube video player" width="560"></iframe></p>
+<h3>第十三週</h3>
+<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/BU7lpXXS3Q0" title="YouTube video player" width="560"></iframe></p>
 <h2>討論</h2>
 <p>本小組的討論時間在組員的協調下，最終定為每個禮拜一的晚上11.。</p>
 <h3>discord</h3>
@@ -3438,6 +3617,18 @@ print(output)     #輸出</pre>
 <p><img alt="" height="583" src="/images/第四次討論14.png" width="700"/></p>
 <p><img alt="" height="645" src="/images/第四次討論15.png" width="700"/></p>
 <p><img alt="" height="101" src="/images/第四次討論16.png" width="700"/></p>
+<p></p>
+<h3>第五次討論</h3>
+<p><img alt="" height="562" src="/images/第13週討論1.png" width="500"/></p>
+<p><img alt="" height="514" src="/images/第13週討論2.png" width="500"/></p>
+<p><img alt="" height="420" src="/images/第13週討論3.png" width="500"/></p>
+<p><img alt="" height="526" src="/images/第13週討論4.png" width="500"/></p>
+<p><img alt="" height="450" src="/images/第13週討論5.png" width="500"/></p>
+<p><img alt="" height="590" src="/images/第13週討論6.png" width="500"/></p>
+<p><img alt="" height="587" src="/images/第13週討論7.png" width="500"/></p>
+<p><img alt="" height="507" src="/images/第13週討論8.png" width="500"/></p>
+<p><img alt="" height="237" src="/images/第13週討論9.png" width="500"/></p>
+<p></p>
 <h2>遇到的問題</h2>
 <h3>更新出錯</h3>
 <p><img alt="" height="252" src="/images/遇到的問題1.jpg" width="800"/></p>
@@ -3446,6 +3637,25 @@ print(output)     #輸出</pre>
 <p>說明:由於兩位組員通時進行推動的動作，所以出現了有位組員pull時檔案衝突<span>，</span>我們討論後決定將他的版本退回到上個版本，結果證實此方法可以有效解決這個問題。</p>
 <h3>倉儲帳號被鎖</h3>
 <p>小組成員遇到帳號被github鎖掉的情況</p>
-<p><img alt="" height="900" src="/images/github遇到問題.png" width="1919"/></p>
-<p></p>
+<p><img alt="" height="242" src="/images/github遇到問題.png" width="515"/></p>
+<p>解決方式，用gitlab代替github，但兩邊都要push</p>
+<h2>小組直播影片</h2>
+<p>這邊放的是每週老師說要直播的影片</p>
+<h3>第11週</h3>
+<p>14號及18號拍攝</p>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/n3OJQUt6AJE" width="560"></iframe></p>
+<p>16號拍攝</p>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/NLgmCgitHJc" width="560"></iframe></p>
+<p>25號拍攝</p>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/E_6as48EvnA" width="560"></iframe></p>
+<h3>第12週</h3>
+<p>14號及48號拍攝</p>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/mUZnyna2U-o" width="560"></iframe></p>
+<p>18號及11號所拍攝</p>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/vnd32z-RsQQ" width="560"></iframe></p>
+<h3>第13週</h3>
+<p>第一次</p>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/GufZP-mT_o0" width="560"></iframe></p>
+<p>第二次</p>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/yayxeqrOelM" width="560"></iframe></p>
 <p></p>
