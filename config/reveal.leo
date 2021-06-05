@@ -18,23 +18,30 @@
 <v t="leo.20200818165413.1"><vh>body</vh>
 <v t="leo.20200818170041.1"><vh>reveal div</vh>
 <v t="leo.20200818170222.1"><vh>slides div</vh>
-<v t="leo.20200818170328.1"><vh>slide 1</vh></v>
-<v t="leo.20200818170535.1"><vh>slide 2</vh></v>
-<v t="leo.20200818170636.1"><vh>slide3</vh>
-<v t="leo.20200818170909.1"><vh>slide 3-1</vh></v>
-<v t="leo.20200818170953.1"><vh>slide 3-2</vh></v>
-<v t="leo.20200818171010.1"><vh>slide 3-3</vh></v>
+<v t="leo.20200818170328.1"><vh>組員介紹</vh></v>
+<v t="leo.20200818170636.1"><vh>初衷</vh>
+<v t="leo.20200818170909.1"><vh>主題:機械手臂</vh></v>
+<v t="leo.20200818170953.1"><vh>當初討論時的初衷影片</vh></v>
 </v>
-<v t="leo.20200818170725.1"><vh>slide 4</vh></v>
-<v t="leo.20200818171138.1"><vh>slide 5 </vh></v>
-<v t="leo.20200818171215.1"><vh>slide 6</vh></v>
-<v t="leo.20200818171244.1"><vh>slide 7 </vh></v>
-<v t="leo.20200818171312.1"><vh>slide 8</vh></v>
-<v t="leo.20200818171344.1"><vh>slide 9</vh></v>
-<v t="leo.20200818171412.1"><vh>slide 10</vh></v>
-<v t="leo.20200818194721.1"><vh>slide 11</vh></v>
-<v t="leo.20200818194751.1"><vh>slide 12</vh></v>
-<v t="leo.20200818194812.1"><vh>slide 13</vh>
+<v t="leo.20200818170725.1"><vh>機械手臂圖</vh>
+<v t="444.20210605182451.1"><vh>機械手臂標題</vh></v>
+<v t="444.20210605182606.1"><vh>圖一</vh></v>
+</v>
+<v t="leo.20200818171138.1"><vh>成功模擬畫面</vh>
+<v t="444.20210605183447.1"><vh>標題</vh></v>
+<v t="444.20210605183453.1"><vh>影片一</vh></v>
+</v>
+<v t="leo.20200818171215.1"><vh>程式圖</vh></v>
+<v t="444.20210605180834.1"><vh>機械手臂多人對戰</vh></v>
+<v t="leo.20200818171244.1"><vh>尋找控制代碼</vh></v>
+<v t="leo.20200818171312.1"><vh>控制解說</vh></v>
+<v t="leo.20200818171344.1"><vh>新增夾爪控制</vh></v>
+<v t="444.20210605181149.1"><vh>TASK</vh>
+<v t="leo.20200818171412.1"><vh>python remoteAPI</vh></v>
+</v>
+<v t="leo.20200818194721.1"><vh>Pick and Place</vh></v>
+<v t="leo.20200818194751.1"><vh>自動吹笛機</vh></v>
+<v t="leo.20200818194812.1"><vh>3D列印機</vh>
 <v t="leo.20200818194908.1"><vh>slide 13-1</vh></v>
 <v t="leo.20200818194933.1"><vh>slide 13-2</vh></v>
 </v>
@@ -71,6 +78,23 @@
 </v>
 </vnodes>
 <tnodes>
+<t tx="444.20210605180834.1"></t>
+<t tx="444.20210605181149.1"></t>
+<t tx="444.20210605182451.1">&lt;section&gt;
+   &lt;h2&gt;機械手臂圖&lt;/h2&gt;
+   以下是我們的繪圖成果
+&lt;/section&gt;</t>
+<t tx="444.20210605182606.1">&lt;section&gt;
+    &lt;p&gt;&lt;img alt="" height="636" src="./../images/機械手臂成品.jpg" width="800"/&gt;&lt;/p&gt;
+&lt;/section&gt;
+
+</t>
+<t tx="444.20210605183447.1">&lt;section&gt;
+   &lt;h2&gt;機械手臂成功模擬畫面&lt;/h2&gt;
+&lt;/section&gt;</t>
+<t tx="444.20210605183453.1">&lt;section&gt;
+   &lt;iframe width="800" height="636" src="https://www.youtube.com/embed/OeSr68lxeSU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;
+&lt;/section&gt;</t>
 <t tx="leo.20180902120523.1"></t>
 <t tx="leo.20180902120523.2">測試</t>
 <t tx="leo.20180902120538.1"></t>
@@ -214,68 +238,28 @@ vertical: body pane on the botton</t>
 &lt;/section&gt;
 
 </t>
-<t tx="leo.20200818170535.1">&lt;section&gt;
-    &lt;h2&gt;Hello There&lt;/h2&gt;
-    &lt;p&gt;
-        reveal.js enables you to create beautiful interactive slide decks using HTML. This presentation will show you examples of what it can do.
-    &lt;/p&gt;
-&lt;/section&gt;
-
-</t>
 <t tx="leo.20200818170636.1">&lt;!-- Example of nested vertical slides --&gt;
 &lt;section&gt;
     @others
-&lt;/section&gt;
-
-</t>
+&lt;/section&gt;</t>
 <t tx="leo.20200818170725.1">&lt;section&gt;
-    &lt;h2&gt;Slides&lt;/h2&gt;
+    @others
+&lt;/section&gt;</t>
+<t tx="leo.20200818170909.1">&lt;section&gt;
+    &lt;h2&gt;機械手臂&lt;/h2&gt;
     &lt;p&gt;
-        Not a coder? Not a problem. There's a fully-featured visual editor for authoring these, try it out at &lt;a href="https://slides.com" target="_blank"&gt;https://slides.com&lt;/a&gt;.
+        我們的主題是機械手臂，我們希望能透過coppeliasim的程式模擬功能，來做出兩隻機械手臂對戰的畫面。會有這個想法是在找資料的時候看到這個了影片。
     &lt;/p&gt;
 &lt;/section&gt;
 
 </t>
-<t tx="leo.20200818170909.1">&lt;section&gt;
-    &lt;h2&gt;Vertical Slides&lt;/h2&gt;
-    &lt;p&gt;Slides can be nested inside of each other.&lt;/p&gt;
-    &lt;p&gt;Use the &lt;em&gt;Space&lt;/em&gt; key to navigate through all slides.&lt;/p&gt;
-    &lt;br&gt;
-    &lt;a href="#" class="navigate-down"&gt;
-        &lt;img class="r-frame" style="background: rgba(255,255,255,0.1);" width="178" height="238" data-src="https://static.slid.es/reveal/arrow.png" alt="Down arrow"&gt;
-    &lt;/a&gt;
-&lt;/section&gt;
-</t>
 <t tx="leo.20200818170953.1">&lt;section&gt;
-    &lt;h2&gt;Basement Level 1&lt;/h2&gt;
-    &lt;p&gt;Nested slides are useful for adding additional detail underneath a high level horizontal slide.&lt;/p&gt;
+&lt;iframe width="800" height="500" src="https://www.youtube.com/embed/cR-YlZ9NdIA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;
 &lt;/section&gt;
 </t>
-<t tx="leo.20200818171010.1">&lt;section&gt;
-    &lt;h2&gt;Basement Level 2&lt;/h2&gt;
-    &lt;p&gt;That's it, time to go back up.&lt;/p&gt;
-    &lt;br&gt;
-    &lt;a href="#/2"&gt;
-        &lt;img class="r-frame" style="background: rgba(255,255,255,0.1); transform: rotate(180deg);" width="178" height="238" data-src="https://static.slid.es/reveal/arrow.png" alt="Up arrow"&gt;
-    &lt;/a&gt;
+<t tx="leo.20200818171138.1">&lt;section&gt;
+    @others
 &lt;/section&gt;</t>
-<t tx="leo.20200818171138.1">&lt;section data-auto-animate&gt;
-    &lt;h2 data-id="code-title"&gt;Pretty Code&lt;/h2&gt;
-    &lt;pre data-id="code-animation"&gt;&lt;code class="hljs" data-trim data-line-numbers&gt;
-        import React, { useState } from 'react';
-
-        function Example() {
-          const [count, setCount] = useState(0);
-
-          return (
-            ...
-          );
-        }
-    &lt;/code&gt;&lt;/pre&gt;
-    &lt;p&gt;Code syntax highlighting courtesy of &lt;a href="https://highlightjs.org/usage/"&gt;highlight.js&lt;/a&gt;.&lt;/p&gt;
-&lt;/section&gt;
-
-</t>
 <t tx="leo.20200818171215.1">&lt;section data-auto-animate&gt;
     &lt;h2 data-id="code-title"&gt;With animations&lt;/h2&gt;
     &lt;pre data-id="code-animation"&gt;&lt;code class="hljs" data-trim data-line-numbers="|4,8-11|17|22-24"&gt;
