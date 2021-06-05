@@ -32,7 +32,10 @@
 <v t="444.20210605183453.1"><vh>影片一</vh></v>
 </v>
 <v t="leo.20200818171215.1"><vh>程式圖</vh></v>
-<v t="444.20210605180834.1"><vh>機械手臂多人對戰</vh></v>
+<v t="444.20210605180834.1"><vh>機械手臂多人對戰</vh>
+<v t="leo.20210606000608.1"><vh>構想來源</vh></v>
+<v t="leo.20210606001725.1"><vh>newHeadline</vh></v>
+</v>
 <v t="leo.20200818171244.1"><vh>尋找控制代碼</vh></v>
 <v t="leo.20200818171312.1"><vh>控制解說</vh></v>
 <v t="leo.20200818171344.1"><vh>新增夾爪控制</vh></v>
@@ -78,12 +81,16 @@
 </v>
 </vnodes>
 <tnodes>
-<t tx="444.20210605180834.1"></t>
+<t tx="444.20210605180834.1">&lt;section&gt;
+    @others
+&lt;/section&gt;
+</t>
 <t tx="444.20210605181149.1"></t>
 <t tx="444.20210605182451.1">&lt;section&gt;
    &lt;h2&gt;機械手臂圖&lt;/h2&gt;
    以下是我們的繪圖成果
-&lt;/section&gt;</t>
+&lt;/section&gt;
+</t>
 <t tx="444.20210605182606.1">&lt;section&gt;
     &lt;p&gt;&lt;img alt="" height="636" src="./../images/機械手臂成品.jpg" width="800"/&gt;&lt;/p&gt;
 &lt;/section&gt;
@@ -91,10 +98,12 @@
 </t>
 <t tx="444.20210605183447.1">&lt;section&gt;
    &lt;h2&gt;機械手臂成功模擬畫面&lt;/h2&gt;
-&lt;/section&gt;</t>
+&lt;/section&gt;
+</t>
 <t tx="444.20210605183453.1">&lt;section&gt;
-   &lt;iframe width="800" height="636" src="https://www.youtube.com/embed/OeSr68lxeSU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;
-&lt;/section&gt;</t>
+   &lt;iframe width="560" height="315" src="https://www.youtube.com/embed/OeSr68lxeSU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;
+&lt;/section&gt;
+</t>
 <t tx="leo.20180902120523.1"></t>
 <t tx="leo.20180902120523.2">測試</t>
 <t tx="leo.20180902120538.1"></t>
@@ -175,11 +184,13 @@ QLineEdit#editorLabel {
 vertical: body pane on the botton</t>
 <t tx="leo.20200818165234.1">@language xml
 @tabwidth -4
-@others</t>
+@others
+</t>
 <t tx="leo.20200818165301.1">&lt;!doctype html&gt;
 &lt;html lang="en"&gt;
 @others
-&lt;/html&gt;</t>
+&lt;/html&gt;
+</t>
 <t tx="leo.20200818165413.1">&lt;body&gt;
 @others
     &lt;script src="dist/reveal.js"&gt;&lt;/script&gt;
@@ -203,7 +214,8 @@ vertical: body pane on the botton</t>
         });
 
     &lt;/script&gt;
-&lt;/body&gt;</t>
+&lt;/body&gt;
+</t>
 <t tx="leo.20200818165438.1">&lt;head&gt;
     &lt;meta charset="utf-8"&gt;
 
@@ -223,14 +235,17 @@ vertical: body pane on the botton</t>
 
     &lt;!-- Theme used for syntax highlighting of code --&gt;
     &lt;link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme"&gt;
-&lt;/head&gt;</t>
+&lt;/head&gt;
+</t>
 <t tx="leo.20200818170041.1">&lt;div class="reveal"&gt;
     @others
-&lt;/div&gt;</t>
+&lt;/div&gt;
+</t>
 <t tx="leo.20200818170222.1">&lt;!-- Any section element inside of this container is displayed as a slide --&gt;
 &lt;div class="slides"&gt;
     @others
-&lt;/div&gt;</t>
+&lt;/div&gt;
+</t>
 <t tx="leo.20200818170328.1">&lt;section&gt;
   &lt;h1&gt;協同產品設計實習&lt;h1&gt;
  &lt;h2&gt;stage3-bg6&lt;h2&gt;
@@ -241,14 +256,16 @@ vertical: body pane on the botton</t>
 <t tx="leo.20200818170636.1">&lt;!-- Example of nested vertical slides --&gt;
 &lt;section&gt;
     @others
-&lt;/section&gt;</t>
+&lt;/section&gt;
+</t>
 <t tx="leo.20200818170725.1">&lt;section&gt;
     @others
-&lt;/section&gt;</t>
+&lt;/section&gt;
+</t>
 <t tx="leo.20200818170909.1">&lt;section&gt;
     &lt;h2&gt;機械手臂&lt;/h2&gt;
     &lt;p&gt;
-        我們的主題是機械手臂，我們希望能透過coppeliasim的程式模擬功能，來做出兩隻機械手臂對戰的畫面。會有這個想法是在找資料的時候看到這個了影片。
+        一開始我們的主題是在stage2的腳踏車衝擊測試機與機械手臂在做選擇，但由於腳踏車衝擊測試機所需要的力學還未接觸到，所以最後我們的主題訂為機械手臂，我們希望能透過coppeliasim的程式模擬功能，來做出兩隻機械手臂對戰的畫面。會有這個想法是在找資料的時候看到下面這部影片。
     &lt;/p&gt;
 &lt;/section&gt;
 
@@ -259,7 +276,8 @@ vertical: body pane on the botton</t>
 </t>
 <t tx="leo.20200818171138.1">&lt;section&gt;
     @others
-&lt;/section&gt;</t>
+&lt;/section&gt;
+</t>
 <t tx="leo.20200818171215.1">&lt;section data-auto-animate&gt;
     &lt;h2 data-id="code-title"&gt;With animations&lt;/h2&gt;
     &lt;pre data-id="code-animation"&gt;&lt;code class="hljs" data-trim data-line-numbers="|4,8-11|17|22-24"&gt;
@@ -393,7 +411,8 @@ vertical: body pane on the botton</t>
         This slide has fragments which are also stepped through in the notes window.
     &lt;/aside&gt;
 &lt;/section&gt;
- </t>
+ 
+</t>
 <t tx="leo.20200818194933.1">&lt;section&gt;
     &lt;h2&gt;Fragment Styles&lt;/h2&gt;
     &lt;p&gt;There's different types of fragments, like:&lt;/p&gt;
@@ -409,7 +428,8 @@ vertical: body pane on the botton</t>
     &lt;p class="fragment fade-in-then-out"&gt;fade-in-then-out&lt;/p&gt;
     &lt;p class="fragment fade-in-then-semi-out"&gt;fade-in-then-semi-out&lt;/p&gt;
     &lt;p&gt;Highlight &lt;span class="fragment highlight-red"&gt;red&lt;/span&gt; &lt;span class="fragment highlight-blue"&gt;blue&lt;/span&gt; &lt;span class="fragment highlight-green"&gt;green&lt;/span&gt;&lt;/p&gt;
-&lt;/section&gt;</t>
+&lt;/section&gt;
+</t>
 <t tx="leo.20200818195039.1">&lt;section id="themes"&gt;
     &lt;h2&gt;Themes&lt;/h2&gt;
     &lt;p&gt;
@@ -472,7 +492,8 @@ vertical: body pane on the botton</t>
 </t>
 <t tx="leo.20200818195339.1">&lt;section data-background="http://i.giphy.com/90F8aUepslB84.gif"&gt;
     &lt;h2&gt;... and GIFs!&lt;/h2&gt;
-&lt;/section&gt;</t>
+&lt;/section&gt;
+</t>
 <t tx="leo.20200818195403.1">&lt;section data-transition="slide" data-background="#b5533c" data-background-transition="zoom"&gt;
     &lt;h2&gt;Background Transitions&lt;/h2&gt;
     &lt;p&gt;
@@ -627,6 +648,15 @@ console.log( '"customevent" has fired' );
         - &lt;a href="https://slides.com"&gt;Try the online editor&lt;/a&gt; &lt;br&gt;
         - &lt;a href="https://github.com/hakimel/reveal.js"&gt;Source code &amp;amp; documentation&lt;/a&gt;
     &lt;/p&gt;
+&lt;/section&gt;
+</t>
+<t tx="leo.20210606000608.1">&lt;section&gt;
+   &lt;h2&gt;構想來源&lt;/h2&gt;
+   &lt;iframe width="556" height="310" src="https://www.youtube.com/embed/cR-YlZ9NdIA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;
+&lt;/section&gt;</t>
+<t tx="leo.20210606001725.1">&lt;section&gt;
+   &lt;h2&gt;示範影片&lt;/h2&gt;
+ &lt;iframe width="556" height="310" src="https://www.youtube.com/embed/I0R_q5HuuOU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;
 &lt;/section&gt;</t>
 </tnodes>
 </leo_file>
