@@ -1,6 +1,6 @@
 小組網站:
 
-https://40823211.github.io/stage3-bg6/content/About.html
+https://40823211.gitlab.io/stage3-bg6/content/About.html
 
 https://40823214.github.io/stage3-bg6/content/About.html
 
